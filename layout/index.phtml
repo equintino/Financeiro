@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
+<head>
+    <title>EMQDesenv - Aplicações</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://fonts.googleapis.com/css?family=Lovers+Quarrel|Miltonian+Tattoo|Sriracha" rel="stylesheet" /> 
+    <link rel="shortcut icon" href="emqdesenv.ico" type="image/x-icon" />
+    <meta name="description" content="emqdesenv - Aplicações" />
+    <meta name="keywords" content="sistemas, PHP" />
+    <meta name="author" content="Edmilson Messias Quintino" />
+
+    <!--<link type="text/css" href="css/redmond/jquery-ui-1.8.16.custom.css" rel="stylesheet" />-->
+    <!--<link href="css/style.css" rel="stylesheet" type="text/css" />-->
+    <link href="../web/css/layout.css" rel="stylesheet" type="text/css" />
+    <!--<link rel="stylesheet" href="css/viewer.css" />
+    <link rel="stylesheet" href="css/$theme_colors.css" />-->
+    <!--<link rel="stylesheet" href="css/layout.css" />-->
+    <!--<link rel="stylesheet" href="css/lightbox.min.css" />-->
+    
+
+   <!-- <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/lightbox-plus-jquery.min.js"></script>-->
+    <script>
+  function mes(x){
+     var x;
+     var d= new Date();
+     //alert(x);
+     if(x=='mov'){
+        //var mes = prompt('Quaal o número do mês?',);
+         //if(mes){
+           //window.location.assingn('index.php');
+         //}else{
+         var mes= prompt('Quaal o número do mês/ano?');
+         if(!mes){
+           window.location.assingn('index.php');
+         }
+           window.location.assign('index.php?pagina=relMensal&mes='+mes+'&act=cad');
+           alert(mes);
+         //}
+     }else{
+         var mes= prompt('Quaal o número do mês/ano?',d.getMonth()+1);
+         if(!mes){
+           window.location.assingn('index.php');
+         }
+           window.location.assign('index.php?pagina=relMensal&mes='+mes+'&act=rel');
+     }
+  }
+</script>
+
+</head>
+<body id="page">
+  <div class="SITE_ROOT" id="SITE_ROOT" >
+    <div class="tail-top-right"></div>
+    <div id="main">        
+        <!-- header -->
+      <div id="cabecalho">
+          <span class="titulo">IBAD </span> &nbsp&nbsp-&nbsp <span class="cor_1" id="logo">Igreja Batista do Amor de Deus</span>
+          <hr size="0.5" class="l1">
+         <div class="menu" >
+             <!--<button>-->
+                   <?php 
+                     $mes_=  ModelValidador::nomeMes(date('m'));
+                     $menu=array('home'=>'Home','cadastro'=>'Ficha de Membros','relMensal'=>'Relatório','relMensal_'=>'Movimentação');                    
+                     foreach($menu as $key => $item){
+                       if($item == 'Relatório'){
+                         echo '<a href="#" onclick=mes()><button class="bnt">'.$item.'</button></a>';
+                       }elseif($item == 'Movimentação'){
+                          echo '<a href="" onclick=mes("mov")><button class="bnt">'.$item.'</button></a>';
+                          //'.Utils::createLink('relMensal',array('act'=>'cad','mes'=>'janeiro')).'
+                       }elseif($item == 'Ficha de Membros'){
+                          echo '<a href="'.Utils::createLink('cadastro',array('act'=>'lista','pag'=>0)).'" ><button class="bnt">'.$item.'</button></a>';
+                       }else{
+                          echo '<a href="'.Utils::createLink($key).'" ><button class="bnt">'.$item.'</button></a>';
+                       }
+                     }
+                   ?>
+             <!--</button>-->
+          </div>
+       </div>
+        <!-- content -->
+        <div id="content">
+            <div class="wrapper">
+                <div class="col-1">
+                </div>
+                <div class="col-2">
+                    <div class="indent">
+                        <?php if ($flashes): ?>
+                            <ul id="flashes">
+                            <?php foreach ($flashes as $flash): ?>
+                                <li><?php echo $flash; ?></li>
+                            <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+                        <?php require $template; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--</div>-->
+     </div>
+   </div>        
+        <!-- footer -->
+        <!--<div id="footer"> -->
+          <div  id="rodape" >
+              <!--<div class="linhaSuperior">&nbsp</div>
+              <!--<div id="SITE_STRUCTURE_WRichText_1" >-->
+              <div class="rodape"> IBAD - Igreja Batista do Amor de Deus - Rua da PAZ, 11 - Bonsucesso - Rio de Jneiro
+                      <span style="line-height:1em;"><br>©Copyright, All rights reserved</span><!--</div>-->
+              <!--<div class="linhaFinal">&nbsp</div>-->
+              </div> 
+          </div>
+</body>
+</html
+<?php /*
+  function nomeMes($mes){
+     switch($mes){
+        case 1:
+         $mes='JANEIRO';
+         break;
+        case 2:
+         $mes='FEVEREIRO';
+         break;
+        case 3:
+         $mes='MARÇO';
+         break;
+        case 4:
+         $mes='ABRIL';
+         break;
+        case 5:
+         $mes='MAIO';
+         break;
+        case 7:
+         $mes='JULHO';
+         break;
+        case 8:
+         $mes='AGOSTO';
+         break;
+        case 9:
+         $mes='SETEMBRO';
+         break;
+        case 10:
+         $mes='OUTUBRO';
+         break;
+        case 11:
+         $mes='NOVEMBRO';
+         break;
+        case 12:
+         $mes='DEZEMBRO';
+         break;
+     }
+     return $mes;
+  }*/
+?>

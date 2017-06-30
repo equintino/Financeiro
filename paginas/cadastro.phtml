@@ -1,0 +1,74 @@
+<?php 
+    $variaveis=array('NOME COMPLETO '=>'nome','DATA DE NASCIMENTO '=>'dt_nascimento','ENDEREÇO DE E-MAIL '=>'email','TELEFONE OU CELULAR '=>'tel','ENDEREÇO DE RESIDÊNCIA '=> 'endereco','BATIZADO NAS ÁGUAS'=>'batizado','DATA DO BATISMO'=>'dt_batismo');
+    $act=$_GET['act'];
+    $x=$_GET['pag'];
+    $y=$x+5;
+        if($x==0){ 
+           $class='class="disabled"';
+        }else{
+           $class='title=RECUAR';
+        }
+?>
+<div  class="conteudo" >
+    <div class="cad">
+        <?php if($act=='lista'):?>
+               <?php 
+                  $dao=new Dao();
+                  $search=new ModelSearchCriteria();
+                  $search->settabela('lt_membros');
+                  $lista=$dao->encontre($search);
+                  $titulos=array('NOME','E-MAIL','TEL.','DATA DE NASCIMENTO','ENDEREÇO','DATA DO BATISMO');
+                  echo '<div class=paginacao>';
+                    echo 'Páginas ';
+                    echo ($x/4)+1 .' de ';
+                    echo ceil(count($lista)/4);
+                  echo '</div>';
+                  if(($x/4)+1 == ceil(count($lista)/4)){
+                     $class2='class=disabled';
+                  }else{
+                     $class2='title="AVANÇAR"';
+                  }
+        echo '<fieldset class=lista><legend><a href='.Utils::createLink('cadastro',array('act'=>'lista','pag'=>$x-4)).' '.$class.' ><< </a> FICHA DE MEMBROS <a href='.Utils::createLink('cadastro',array('act'=>'lista','pag'=>$x+4,'contador'=>count($lista))).' '.$class2.'> >> </a></legend>';
+           echo '<table cellspacing=0 border=1>';
+                  foreach($lista as $keys => $item){
+                    if($x < $keys && $keys < $y){
+                     echo '<tr><td>'.$titulos[0].'</td><td>'.$item->getnome().'</td></tr>';
+                     echo '<tr><td>'.$titulos[1].'</td><td>'.$item->getemail().'</td></tr>';
+                     echo '<tr><td>'.$titulos[2].'</td><td>'.$item->gettel().'</td></tr>';
+                     echo '<tr><td>'.$titulos[3].'</td><td>'.  ModelValidador::data($item->getdt_nascimento()).'</td></tr>';
+                     echo '<tr><td>'.$titulos[4].'</td><td>'.$item->getendereco().'</td></tr>';
+                     echo '<tr><td>'.$titulos[5].'</td><td>'.  ModelValidador::data($item->getdt_batismo()).'</td></tr>';
+                     echo '<tr><td colspan=2 class=divisao>&nbsp</td><tr>';
+                     //$y++;
+                    }elseif($keys > $y){
+                       break;
+                    }
+                  }
+                       echo '</table>';
+      echo '</fieldset>';
+               ?>
+        <?php elseif($act=='cad'): ?>
+        <fieldset>
+            <legend>CADASTRO DE MEMBROS</legend>
+         <table>
+         <form class="font_1" id="cadastro" action="../paginas/add.php?act=cad" method="POST">
+             <?php foreach($variaveis as $keys => $item){
+                 if($item=='batizado'){
+                    echo '<tr><td align=right>* '.$keys.': </td><td><input type=radio value=S name='.$item.' required> SIM ';
+                    echo '<input type=radio value=N name='.$item.'> NÃO</td></tr>';
+                 }elseif($item=='email'){
+                    echo "<tr><td align=\"right\"> $keys: </td><td><input type=\"text\" name=\"".$item."\" size=\"40\" / ></td></tr>";
+                 }else{
+                    echo "<tr><td align=\"right\">* $keys: </td><td><input type=\"text\" name=\"".$item."\" size=\"40\" / required></td></tr>";
+                 }
+             }
+             ?>
+             <tr><td></td><td align="right"><input type="submit" value="GRAVA">
+               &nbsp<input type="reset" value="LIMPA"></td></tr>
+         </form>
+         </table>
+            <span class="info">* campos obrigatórios</span>
+        </fieldset>
+        <?php endif; ?>
+    </div>
+</div>
