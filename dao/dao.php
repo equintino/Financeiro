@@ -8,7 +8,6 @@
             set_time_limit(3600);
             ini_set('memory_limit', '-1');
         $result = array();
-        //print_r($this->query($this->getEncontreSql($search)));echo '<br>';
         foreach ($this->query($this->getEncontreSql($search)) as $row){
             $model = new Model();
             modelMapper::map($model, $row);
@@ -175,6 +174,9 @@
              }
           }else{
              $sql = 'SELECT * FROM `ibad`.`'.$search->gettabela().'` WHERE excluido = 0 ';
+          }
+          if($search->gettabela() != 'saldo'){
+            $sql .= ' ORDER BY `dt`';
           }
         return $sql;
   }

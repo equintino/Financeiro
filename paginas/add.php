@@ -12,7 +12,7 @@
   foreach($_POST as $key => $item){
      if($key=='dia'){
         $key='dt';
-        $item='20'.$_POST['ano'].'-'.ModelValidador::numeroMes($mes).'-'.$item;
+        $item=$_POST['ano'].'-'.ModelValidador::numeroMes($mes).'-'.$item;
      }elseif($key=='movimentacao'){
         $key=$item;
      }elseif($key=='ano'){

@@ -21,13 +21,17 @@
     }
     .resumao{
         position: absolute;
-        top: 400px;
-        margin-left: 280px;
+        top: 250px;
+        margin-left: 200px;
     }
     .assinatura{
        text-align: center;
-       margin-top: -400px;
+       margin-top: -300px;
        font-weight: 700;
+       font-size: 25px;
+    }
+    .funcao{
+       font-size: 19px;
     }
 .rel th, .resumo th{
     background-color: green;
@@ -37,7 +41,7 @@
     background-color: white;
     opacity: 0.7;
     font-weight: bolder;
-    font-size: 13px;
+    font-size: 23px;
 }
 .separa{
     background-color: blue;
@@ -191,10 +195,10 @@
     <div class="assinatura">
         __________________________________<br>
         Mônica Cristina Peixoto Quintino<br>
-        1a Tesoureira<br><br><br>
+        <span class=funcao>1a Tesoureira</span><br><br>
        
         __________________________________<br>
         Aventino Quintino da Silva<br>
-       Partor Presidente
+        <span class=funcao>Partor Presidente</span>
     </div>
 </div>
