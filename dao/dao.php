@@ -175,9 +175,10 @@
           }else{
              $sql = 'SELECT * FROM `ibad`.`'.$search->gettabela().'` WHERE excluido = 0 ';
           }
-          if($search->gettabela() != 'saldo'){
-            $sql .= ' ORDER BY `dt`';
+          if($search->gettabela() != 'saldo' || $search->gettabela() != 'lt_membos'){
+            //$sql .= ' ORDER BY `dt`';
           }
+          //print_r($sql);
         return $sql;
   }
     private function criaTabela($tabela){
