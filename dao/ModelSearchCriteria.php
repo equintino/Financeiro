@@ -160,4 +160,12 @@
           $this->tabela = $tabela;
           return $this;
       }
+   private $order;
+       public function getorder(){
+        return $this->order;
+      }
+      public function setorder($order){
+          $this->order = $order;
+          return $this;
+      }
 }

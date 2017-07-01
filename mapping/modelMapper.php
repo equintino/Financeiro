@@ -61,5 +61,8 @@
 	if (array_key_exists('tabela', $properties)){
 	  $model->settabela($properties['tabela']);
 	}
+	if (array_key_exists('order', $properties)){
+	  $model->setorder($properties['order']);
+	}
   } 
  }

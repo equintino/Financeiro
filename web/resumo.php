@@ -36,6 +36,7 @@
 .rel th, .resumo th{
     background-color: green;
     color: white;
+    font-size: 23px;
 }
 .rel td, .resumo td{
     background-color: white;
@@ -80,9 +81,8 @@
              $dados=$dao->encontre($search);
              foreach($dados as $saldomes);
              $saldo=$saldoAnterior=($saldomes->getsaldo());
-             $search->settabela(ModelValidador::tirarAcento(ModelValidador::nomeMes($mes)));
-             $search->setmes(null);
-             //print_r($search);
+             $search->settabela($ano);
+             $search->setmes($mes);
              $relatorios=$dao->encontre($search);
              //print_r($relatorios);die;
           ?>
