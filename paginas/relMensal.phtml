@@ -88,15 +88,12 @@ function lista(membros){
                foreach($membros as $membro){
                   $lista .= '"'.$membro->getnome().'",';
                }
-               //print_r($lista);
                echo '<script>
                         var membros=new Array('.$lista.');
-                        //alert(membros[1]);
                      </script>';
-               //$lista='Edmilson Messias Quintino,Mônica Cristin Peixoto Quintino';
                
                $search->settabela('saldo');
-               $search->setano('20'.$ano);
+               $search->setano($ano);
                $search->setmes($mes);
                $numeroMes=ModelValidador::numeroMes($mes);
                $relatorio=$dao->encontre($search);
@@ -109,7 +106,7 @@ function lista(membros){
          ?>
          <form class="font_1" id="cadastro" action="../paginas/add.php?act=rel" method="POST" >
          <table class="notprint">
-                 <caption>MOVIMENTO DO MÊS DE <?= mb_strtoupper($mes,'UTF-8')?></caption>
+                 <caption>MOVIMENTO DO MÊS DE <?= mb_strtoupper($mes,'UTF-8')?> DE <?= $ano ?></caption>
                  <tr><td align="right">DIA: </td><td><input autofocus type="text" name="dia" size="1" maxlength="2"/></td></tr>
                  <tr>
                      <td align="right">MOVIMENTAÇÃO: </td>
@@ -146,21 +143,24 @@ function lista(membros){
              $search->setmes(strtolower(ModelValidador::tirarAcento($mesAnterior)));
              $dados=$dao->encontre($search);
              foreach($dados as $saldomes);
-             if(!$conclui){
-               if(!isset($saldomes)){
+             $saldo=$saldoAnterior=($saldomes->getsaldo()); 
+             $search->setmes(ModelValidador::numeroMes(ModelValidador::tirarAcento($mes)));
+             $search->settabela($ano);
+             $search->setorder('dt');
+             //print_r($search);
+             //$search->setmes(null); 
+             $relatorios=$dao->encontre($search); 
+             if(!$relatorios){
+               //if(!isset($saldomes)){
                   echo 'Relatório do mês de '.$mes.' é inexistente.';
                   die;
-               }
+               //}
              } 
-             $saldo=$saldoAnterior=($saldomes->getsaldo()); 
-             $search->settabela(ModelValidador::tirarAcento($mes));
-             $search->setmes(null); 
-             $relatorios=$dao->encontre($search); 
              foreach($relatorios as $datas); 
           ?>
        <div class="rel" >
          <table border="1" cellspacing="0" class="rel">
-             <tr><th colspan="<?= count($variaveis) ?>2" align="center">MOVIMENTO FINANCEIRO DO MÊS - <?= mb_strtoupper($mes,'UTF-8').'('.substr($datas->getdt(),0,4).')'; ?></th>
+             <tr><th colspan="<?= count($variaveis) ?>2" align="center">MOVIMENTO FINANCEIRO DO MÊS - <?= mb_strtoupper($mes,'UTF-8').'('.$ano.')'; ?></th>
              </tr>
              <tr>
                  <?php 
@@ -186,6 +186,7 @@ function lista(membros){
                      <?php 
                        echo '<tr class=totais><td align=center>01</td><td>SALDO ANTERIOR</td><td align=center></td><td align=center></td><td align=center></td><td align=right>'.number_format($saldo,'2',',','.').'</td></tr>';
                        foreach($relatorios as $relatorio){
+                          //print_r($relatorio);
                          echo '<tr>';
                           foreach($variaveis as $item){
                            $getnome="get$item";
@@ -207,7 +208,7 @@ function lista(membros){
                                    }
                                }else{
                                 echo '<td align=center>';
-                                  echo substr($relatorio->$getnome(),8,2);
+                                  echo substr($relatorio->$getnome(),0,2);
                                }
                              }elseif($relatorio->$getnome() == $relatorio->getdescricao()){
                                 echo '<td align=left>';
@@ -238,7 +239,7 @@ function lista(membros){
                MOVIMENTO FINANCEIRO DO MÊS - <?php 
                 echo mb_strtoupper($mes,'UTF-8');
                 foreach($relatorios as $datas);
-                echo '('.substr($datas->getdt(),0,4).')';
+                echo '('.$ano.')';
                 ?></th></tr>
            <?php $colunas=array('DESCRIÇÃO','SAÍDAS','ENTRADAS');?>
              <tr><?php foreach($colunas as $col)echo "<th>$col</th>";?></tr>

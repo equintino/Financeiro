@@ -2,7 +2,7 @@
     $filename='ModelSearchCriteria.php';
     $mode='w+';
     $handle=fopen($filename, $mode);
-    $variaveis=array('id','nome','email','tel','endereco','batizado','dt_batismo','dt_nascimento','criado','modificado','excluido','mes','dt','descricao','entrada','saida','diz_ofe','ano','saldo','tabela');
+    $variaveis=array('id','nome','email','tel','endereco','batizado','dt_batismo','dt_nascimento','criado','modificado','excluido','mes','dt','descricao','entrada','saida','diz_ofe','ano','saldo','tabela','order');
     
     $texto="<?php \r\n class ModelSearchCriteria{\r\n";
     foreach($variaveis as $item){

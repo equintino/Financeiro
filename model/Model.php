@@ -20,6 +20,7 @@
  private $ano;
  private $saldo;
  private $tabela;
+ private $order;
  public function getid(){
 	return $this->id;
  }
@@ -139,5 +140,11 @@
  }
  public function settabela($tabela ){
 	$this->tabela=$tabela;
+ }
+ public function getorder(){
+	return $this->order;
+ }
+ public function setorder($order ){
+	$this->order=$order;
  }
  }

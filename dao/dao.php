@@ -167,22 +167,23 @@
    }
    private function getEncontreSql(ModelSearchCriteria $search = null){
          if ($search !== null) {
-             if($search->getmes()){
-                 $sql="SELECT * FROM ".$search->gettabela()." WHERE mes='".$search->getmes()."' AND excluido = 0 ";
+             if($search->getmes() && !$search->getano()){
+                 $sql="SELECT * FROM `".$search->gettabela()."` WHERE mes='".$search->getmes()."' AND excluido = 0 ";
+             }elseif($search->getano()){              
+                $sql="SELECT * FROM `".$search->gettabela()."` WHERE mes='".$search->getmes()."' AND ano='".$search->getano()."' AND excluido = 0 ";
              }else{
-                 $sql='SELECT * FROM '.$search->gettabela().' WHERE excluido = 0 ';
+                 $sql='SELECT * FROM `'.$search->gettabela().'` WHERE excluido = 0 ';
              }
           }else{
              $sql = 'SELECT * FROM `ibad`.`'.$search->gettabela().'` WHERE excluido = 0 ';
           }
-          if($search->gettabela() != 'saldo' || $search->gettabela() != 'lt_membos'){
-            //$sql .= ' ORDER BY `dt`';
+          if($search->getorder()){
+            $sql .= ' ORDER BY `'.$search->getorder().'`';
           }
-          //print_r($sql);
         return $sql;
   }
     private function criaTabela($tabela){
-        $sql="CREATE TABLE IF NOT EXISTS `ibad`.`$tabela` ( `id` INT(5) NOT NULL AUTO_INCREMENT , `mes` INT(2) NULL , `dt` DATE NULL , `descricao` TEXT NULL , `entrada` DECIMAL(12,2) NULL , `saida` DECIMAL(12,2) NULL , `diz_ofe` ENUM('diz','ofe') NULL , `criado` varchar(50) NULL , `modificado` varchar(50) NULL , `excluido` INT(1) NOT NULL DEFAULT '0', `saldoAnterior` DECIMAL(12,2) NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;";
+        $sql="CREATE TABLE IF NOT EXISTS `ibad`.`$tabela` ( `id` INT(5) NOT NULL AUTO_INCREMENT , `mes` INT(2) NULL , `dt` DATE NULL , `descricao` TEXT NULL , `entrada` DECIMAL(12,2) NULL , `saida` DECIMAL(12,2) NULL , `diz_ofe` ENUM('diz','ofe') NULL , `criado` varchar(50) NULL , `modificado` varchar(50) NULL , `excluido` INT(1) NOT NULL DEFAULT '0', PRIMARY KEY (`id`)) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;";
         return $sql;
    }
 }

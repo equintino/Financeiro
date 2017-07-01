@@ -42,7 +42,7 @@
   }
   ////print_r($_POST);
   //echo ModelValidador::nomeMes('01');
-  $model->settabela(strtolower(ModelValidador::nomeMes($mes)));
+  $model->settabela($ano);
   //print_r($model);//die;
   /*echo '<pre>';
   PRINT_R($_POST);
