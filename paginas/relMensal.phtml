@@ -137,19 +137,28 @@ function lista(membros){
              $mesAnterior=ModelValidador::nomeMes($_GET['mes']-1);
              if($_GET['mes']==1){
                 $mesAnterior='dezembro';
+                $ano=$ano-1;
              }
+             //echo $ano;
              $search=new ModelSearchCriteria();
+             $search->setano($ano);
              $search->settabela('saldo');
              $search->setmes(strtolower(ModelValidador::tirarAcento($mesAnterior)));
+             //print_r($search);die;
              $dados=$dao->encontre($search);
-             foreach($dados as $saldomes);
+             foreach($dados as $saldomes); 
              $saldo=$saldoAnterior=($saldomes->getsaldo()); 
              $search->setmes(ModelValidador::numeroMes(ModelValidador::tirarAcento($mes)));
+             if($_GET['mes']==1){
+                $ano=$ano+1;
+             }
              $search->settabela($ano);
              $search->setorder('dt');
-             //print_r($search);
+             $search->setano(null);
+             //print_r($search);die;
              //$search->setmes(null); 
              $relatorios=$dao->encontre($search); 
+             //print_r($relatorios);die;
              if(!$relatorios){
                //if(!isset($saldomes)){
                   echo 'Relatório do mês de '.$mes.' é inexistente.';

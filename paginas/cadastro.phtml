@@ -1,5 +1,5 @@
 <?php 
-    $variaveis=array('NOME COMPLETO '=>'nome','DATA DE NASCIMENTO '=>'dt_nascimento','ENDEREÇO DE E-MAIL '=>'email','TELEFONE OU CELULAR '=>'tel','ENDEREÇO DE RESIDÊNCIA '=> 'endereco','BATIZADO NAS ÁGUAS'=>'batizado','DATA DO BATISMO'=>'dt_batismo');
+    $variaveis=array('NOME COMPLETO '=>'nome','DATA DE NASCIMENTO '=>'dt_nascimento','ENDEREÇO DE E-MAIL '=>'email','TELEFONE '=>'tel','CELULAR '=>'cel','ENDEREÇO DE RESIDÊNCIA '=> 'endereco','DATA DO BATISMO'=>'dt_batismo');
     $act=$_GET['act'];
     $x=$_GET['pag'];
     $y=$x+5;
@@ -17,7 +17,29 @@
                   $search=new ModelSearchCriteria();
                   $search->settabela('lt_membros');
                   $lista=$dao->encontre($search);
-                  $titulos=array('NOME','E-MAIL','TEL.','DATA DE NASCIMENTO','ENDEREÇO','DATA DO BATISMO');
+                  //echo '<pre>';
+                  /*
+                  foreach($lista as $model){
+                     $ano=substr($model->getdt_casamento(),-4,4);
+                     $mes=substr($model->getdt_casamento(),-7,2);
+                     $dia=substr($model->getdt_casamento(),0,2);
+                     $model->setdt_casamento($ano.'-'.$mes.'-'.$dia);
+                     /*$ano=substr($model->getdt_nascimento(),-4,4);
+                     $mes=substr($model->getdt_nascimento(),-7,2);
+                     $dia=substr($model->getdt_nascimento(),0,2);
+                     $model->setdt_nascimento($ano.'-'.$mes.'-'.$dia);
+                     $ano=substr($model->getdt_ingresso(),-4,4);
+                     $mes=substr($model->getdt_ingresso(),-7,2);
+                     $dia=substr($model->getdt_ingresso(),0,2);
+                     $model->setdt_ingresso($ano.'-'.$mes.'-'.$dia);
+                     //print_r($model);die;
+                     $dao->grava($model);
+                     //echo '<pre>';
+                     //print_r($model);
+                  }
+                  */
+                  
+                  $titulos=array('Nome','E-mail','Tel.','Data de Nascimento','Endereço','Data do Batismo');
                   echo '<div class=paginacao>';
                     echo 'Páginas ';
                     echo ($x/4)+1 .' de ';
@@ -32,12 +54,36 @@
            echo '<table cellspacing=0 border=1>';
                   foreach($lista as $keys => $item){
                     if($x < $keys && $keys < $y){
-                     echo '<tr><td>'.$titulos[0].'</td><td>'.$item->getnome().'</td></tr>';
-                     echo '<tr><td>'.$titulos[1].'</td><td>'.$item->getemail().'</td></tr>';
-                     echo '<tr><td>'.$titulos[2].'</td><td>'.$item->gettel().'</td></tr>';
-                     echo '<tr><td>'.$titulos[3].'</td><td>'.  ModelValidador::data($item->getdt_nascimento()).'</td></tr>';
-                     echo '<tr><td>'.$titulos[4].'</td><td>'.$item->getendereco().'</td></tr>';
-                     echo '<tr><td>'.$titulos[5].'</td><td>'.  ModelValidador::data($item->getdt_batismo()).'</td></tr>';
+                       if($item->getnome()){
+                        echo '<tr><td class=nome>'.$titulos[0].': </td><td class=dados>&nbsp'.$item->getnome().'</td></tr>';
+                       }
+                       if($item->getemail()){
+                        echo '<tr><td class=nome>'.$titulos[1].': </td><td class=dados>&nbsp'.$item->getemail().'</td></tr>';
+                       }
+                       if($item->gettel()){
+                        echo '<tr><td class=nome>'.$titulos[2].': </td><td class=dados>&nbsp'.$item->gettel().'</td></tr>';
+                       }
+                       if($item->getdt_nascimento()){
+                        echo '<tr><td class=nome>'.$titulos[3].': </td><td class=dados>&nbsp'.ModelValidador::data($item->getdt_nascimento()).'</td></tr>';
+                       }
+                       if($item->gettipo()){
+                        echo '<tr><td class=nome>'.$titulos[4].': </td><td class=dados>&nbsp'.$item->gettipo().' '.$item->getendereco().', '.$item->getnumero();
+                       }
+                       if($item->getcomplemento()){
+                         echo ' - '.$item->getcomplemento();
+                       }
+                       if($item->getbairro()){
+                        echo '<br>&nbsp'.$item->getbairro();
+                       }
+                       if($item->getcidade()){
+                          echo ' - '.$item->getcidade();
+                       }
+                       if($item->getcep()){
+                          echo '<br>&nbspCEP. '.$item->getcep();
+                       }
+                       if($item->getdt_batismo()){
+                        echo '<tr><td class=nome>'.$titulos[5].': </td><td class=dados>&nbsp'.ModelValidador::data($item->getdt_batismo()).'</td></tr>';
+                       }
                      echo '<tr><td colspan=2 class=divisao>&nbsp</td><tr>';
                      //$y++;
                     }elseif($keys > $y){

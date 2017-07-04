@@ -37,7 +37,8 @@
            window.location.assingn('index.php');
          }
            window.location.assign('index.php?pagina=relMensal&mes='+mes+'&act=cad');
-           alert(mes);
+           //break;
+         alert();
          //}
      }else{
          var mes= prompt('Quaal o número do mês/ano?',d.getMonth()+1);
@@ -62,7 +63,8 @@
              <!--<button>-->
                    <?php 
                      $mes_=  ModelValidador::nomeMes(date('m'));
-                     $menu=array('home'=>'Home','cadastro'=>'Ficha de Membros','relMensal'=>'Relatório','relMensal_'=>'Movimentação');                    
+                     $menu=array('home'=>'Home','cad'=>'Cadastro de Membros','lista'=>'Ficha de Membros','relMensal'=>'Relatório','relMensal_'=>'Movimentação');    
+                     //print_r($menu);
                      foreach($menu as $key => $item){
                        if($item == 'Relatório'){
                          echo '<a href="#" onclick=mes()><button class="bnt">'.$item.'</button></a>';
@@ -71,6 +73,8 @@
                           //'.Utils::createLink('relMensal',array('act'=>'cad','mes'=>'janeiro')).'
                        }elseif($item == 'Ficha de Membros'){
                           echo '<a href="'.Utils::createLink('cadastro',array('act'=>'lista','pag'=>0)).'" ><button class="bnt">'.$item.'</button></a>';
+                       }elseif($item == 'Cadastro de Membros'){
+                          echo '<a href="'.Utils::createLink('cadastro',array('act'=>'cad','pag'=>0)).'" ><button class="bnt">'.$item.'</button></a>';
                        }else{
                           echo '<a href="'.Utils::createLink($key).'" ><button class="bnt">'.$item.'</button></a>';
                        }

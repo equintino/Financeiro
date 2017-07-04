@@ -135,8 +135,25 @@ body{
     #background-color: wheat;
     opacity: 0.8;
 }
-.lista table, .lista table td {
-   background-color: cornsilk; 
+.lista table{
+    width: 100%;
+}
+.lista table .dados {
+    //border: 1px solid red;
+    //width: 100%;
+    background-color: cornsilk; 
+    //font-weight: 700;
+    text-transform: uppercase;
+    font-family: cursive;
+}
+.nome{
+    text-align: right;
+    width: 28%;
+    background-color: rgba(106, 99, 99, 0.3);
+    //text-transform: lowercase;
+    font-size: 20px;
+    //font-weight: 600;
+    //color: white;
 }
 .disabled {
    pointer-events: none;

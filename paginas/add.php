@@ -58,6 +58,10 @@
   }
 ?>
 <h3>REGISTRO GRAVADO COM SUCESSO</h3>
+<?php if($act=='rel'): ?>
 <meta HTTP-EQUIV='refresh' CONTENT='1;URL=../web/index.php?pagina=relMensal&mes=<?= ModelValidador::numeroMes($mes).'/'.$ano ?>&act=cad&continua=1'>
+<?php elseif($act=='cad'): ?>
+<meta HTTP-EQUIV='refresh' CONTENT='1;URL=../web/index.php?pagina=cadastro&act=cad&pag=0'>
+<?php endif; ?>
 <!--<button onclick="history.go(-1)" >VOLTAR</button>-->
 <button onclick= window.location.assign("../web/") >PÁGINA INICIAL</button>
