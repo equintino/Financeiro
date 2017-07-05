@@ -10,7 +10,7 @@
         }
 ?>
 <div  class="conteudo" >
-    <div class="cad">
+    <div class="cadastro">
         <?php if($act=='lista'):?>
                <?php 
                   $dao=new Dao();
@@ -60,8 +60,10 @@
                        if($item->getemail()){
                         echo '<tr><td class=nome>'.$titulos[1].': </td><td class=dados>&nbsp'.$item->getemail().'</td></tr>';
                        }
-                       if($item->gettel()){
-                        echo '<tr><td class=nome>'.$titulos[2].': </td><td class=dados>&nbsp'.$item->gettel().'</td></tr>';
+                       if($item->gettel()||$item->getcel()){
+                        echo '<tr><td class=nome>'.$titulos[2].': </td><td class=dados>&nbsp'.$item->gettel();
+                        if($item->gettel() && $item->getcel()){echo ' / ';};
+                        echo $item->getcel().'</td></tr>';
                        }
                        if($item->getdt_nascimento()){
                         echo '<tr><td class=nome>'.$titulos[3].': </td><td class=dados>&nbsp'.ModelValidador::data($item->getdt_nascimento()).'</td></tr>';
