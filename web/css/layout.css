@@ -40,7 +40,7 @@ a:link{
     font-family: sans-serif;
     height: 980px;
     #width: 98%;
-    #border: solid 1px red;
+    //border: solid 1px red;
     margin: 20px auto;
     #overflow: auto;
 }
@@ -55,8 +55,9 @@ a:link{
   min-height: 100%;
   position: relative;
   margin: 0 auto; 
-  width:980px;
+  width:1080px;
   padding-bottom:40px;
+  //border: 1px solid red;
 }
 .s6{
     left: 20px; 
@@ -106,24 +107,24 @@ body{
     background-color: darkgray;
 }
     @media print {
-  body * {
-    visibility: hidden;
-  }
-  #printable, #printable * {
-    visibility: visible;
-  }
-  #printable {
-    background: url('../imagens/timbrado.png');
-    position: absolute;
-    #margin: auto;
-    left: 30%;
-    top: 30%;
-  }
-    .fundo{
-       position: absolute;     
-       z-index: -2;
+        body * {
+          visibility: hidden;
+        }
+        #printable, #printable * {
+          visibility: visible;
+        }
+        #printable {
+          background: url('../imagens/timbrado.png');
+          position: absolute;
+          #margin: auto;
+          left: 30%;
+          top: 30%;
+        }
+          .fundo{
+             position: absolute;     
+             z-index: -2;
+          }
     }
-}
 .texto{
     margin: 0 40px;
 }
@@ -133,28 +134,57 @@ body{
     #height: 835px;
     //overflow: auto;
     #background-color: wheat;
-    opacity: 0.8;
+    opacity: 1;
     //border: 1px solid red;
 }
 .lista table{
     width: 100%;
 }
+.lista table td{
+    padding: 2px;
+}
 .lista table .dados {
-    //border: 1px solid red;
-    //width: 100%;
     background-color: cornsilk; 
-    //font-weight: 700;
     text-transform: uppercase;
     font-family: cursive;
+    font-size: 14px;
+}
+.dados_{
+    background-color: cornsilk; 
+    font-family: cursive; 
+    font-size: 14px;   
 }
 .nome{
     text-align: right;
+    background-color: #c0bf9b;
+    font-size: 17px;
+}
+.nome2{
+    text-align: right;
+    background-color: #c0bf9b;
+    //background-color: rgba(106, 99, 99, 0.4);
+    font-size: 17px;
+}
+.nome3{
+    text-align: right;
+    background-color: #c0bf9b;
+    //background-color: rgba(106, 99, 99, 0.4);
+    font-size: 17px;
+}
+.col1{
+    width: 13%;
+}
+.col2{
+    width: 12%;
+}
+.col3{
+    width: 18%;
+}
+.col4{
     width: 28%;
-    background-color: rgba(106, 99, 99, 0.3);
-    //text-transform: lowercase;
-    font-size: 20px;
-    //font-weight: 600;
-    //color: white;
+}
+.col5{
+    width: 18%;
 }
 .disabled {
    pointer-events: none;
@@ -179,4 +209,28 @@ body{
     #border: 1px solid red;
     #width: 200px;
     text-align: center;
+}
+.cadMembros{
+    width: 800px;
+    margin-left: -90px;
+}
+.foto{
+    float: right;
+    clear: both;
+    border: 1px solid red;
+}
+/*
+#teste { position:relative; }
+#upload { position:absolute; top:0;left:0; border:1px solid #ff0000; opacity:0.01; z-index:1; }
+#texto { border:0px; background:#dedede; border-radius:4px; padding:5px; }
+#botao { border:1px solid #dedede; background:#989898; color:#ffffff; border-radius:4px; padding:5px }
+*/
+//////
+input[type=file] {
+    float: left;
+    display: block;
+}
+.hide {
+    display: none;
+    float: left;
 }

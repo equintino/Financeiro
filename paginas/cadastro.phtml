@@ -39,7 +39,7 @@
                   }
                   */
                   
-                  $titulos=array('Nome','E-mail','Tel.','Data de Nascimento','Endereço','Data do Batismo');
+                  $titulos=array('Nome','E-mail','Tel.','Nascimento','Endereço','Batismo','Membro desde','Estado Civil','Conjuge','Igreja do Batismo');
                   echo '<div class=paginacao>';
                     echo 'Páginas ';
                     echo ($x/4)+1 .' de ';
@@ -55,38 +55,51 @@
                   foreach($lista as $keys => $item){
                     if($x < $keys && $keys < $y){
                        if($item->getnome()){
-                        echo '<tr><td class=nome>'.$titulos[0].': </td><td class=dados>&nbsp'.$item->getnome().'</td></tr>';
+                        echo '<tr><td class="nome">'.$titulos[0].' </td><td class=dados colspan=3>&nbsp'.$item->getnome().'</td><td class=nome2>'.$titulos[3].' </td><td class=dados>&nbsp'.  ModelValidador::data($item->getdt_nascimento()).'</td></tr>';
                        }
-                       if($item->getemail()){
-                        echo '<tr><td class=nome>'.$titulos[1].': </td><td class=dados>&nbsp'.$item->getemail().'</td></tr>';
-                       }
-                       if($item->gettel()||$item->getcel()){
-                        echo '<tr><td class=nome>'.$titulos[2].': </td><td class=dados>&nbsp'.$item->gettel();
+                       if($item->gettel()||$item->getcel()||$item->getemail()){
+                          if($item->getemail()){
+                             $colspan=2;
+                          }else{
+                             $colspan=5;
+                          }
+                        echo '<tr><td class=nome >'.$titulos[2].' </td><td class=dados colspan='.$colspan.'>&nbsp'.$item->gettel();
                         if($item->gettel() && $item->getcel()){echo ' / ';};
-                        echo $item->getcel().'</td></tr>';
+                        echo $item->getcel().'</td>';
+                       if($item->getemail()){
+                        echo '<td class=nome>'.$titulos[1].' </td><td class=dados_ colspan=2>&nbsp'.$item->getemail().'</td></tr>';
                        }
-                       if($item->getdt_nascimento()){
-                        echo '<tr><td class=nome>'.$titulos[3].': </td><td class=dados>&nbsp'.ModelValidador::data($item->getdt_nascimento()).'</td></tr>';
+                       }
+                       if($item->getestcivil()){
+                          if(strstr($item->getestcivil(),'d',true)=="Casa"){
+                             $colspan=1;
+                          }else{
+                             $colspan=5;
+                          }
+                          echo '<tr><td class=nome>'.$titulos[7].' </td><td class="dados" colspan='.$colspan.'>&nbsp'.$item->getestcivil().'</td>';
+                          if(strstr($item->getestcivil(),'d',true)=='Casa'){
+                          echo '<td class=nome2>'.$titulos[8].' </td><td class=dados colspan=3>&nbsp'.$item->getconjuge().'</td></tr>';
+                          }
                        }
                        if($item->gettipo()){
-                        echo '<tr><td class=nome>'.$titulos[4].': </td><td class=dados>&nbsp'.$item->gettipo().' '.$item->getendereco().', '.$item->getnumero();
+                        echo '<tr><td class=nome>'.$titulos[4].' </td><td class=dados colspan=5>&nbsp'.$item->gettipo().' '.$item->getendereco().', '.$item->getnumero();
                        }
                        if($item->getcomplemento()){
                          echo ' - '.$item->getcomplemento();
                        }
                        if($item->getbairro()){
-                        echo '<br>&nbsp'.$item->getbairro();
+                        echo ' - '.$item->getbairro();
                        }
                        if($item->getcidade()){
-                          echo ' - '.$item->getcidade();
+                          echo '<br>&nbsp'.$item->getcidade();
                        }
                        if($item->getcep()){
-                          echo '<br>&nbspCEP. '.$item->getcep();
+                          echo ' - CEP'.$item->getcep();
                        }
-                       if($item->getdt_batismo()){
-                        echo '<tr><td class=nome>'.$titulos[5].': </td><td class=dados>&nbsp'.ModelValidador::data($item->getdt_batismo()).'</td></tr>';
+                       if($item->getdt_batismo() && $item->getdt_batismo()!='0000-00-00'){
+                        echo '<tr><td class="nome col1">'.$titulos[5].' </td><td class="dados col2">&nbsp'.ModelValidador::data($item->getdt_batismo()).'</td><td class="nome3 col3">'.$titulos[9].'</td><td class="dados col4">&nbsp'.$item->getigbatismo().'</td><td class="nome2 col5">'.$titulos[6].' </td><td class="dados col6">'.  ModelValidador::data($item->getdt_ingresso()).'</td></tr>';
                        }
-                     echo '<tr><td colspan=2 class=divisao>&nbsp</td><tr>';
+                     echo '<tr><td colspan=6 class=divisao>&nbsp</td><tr>';
                      //$y++;
                     }elseif($keys > $y){
                        break;
@@ -96,7 +109,7 @@
       echo '</fieldset>';
                ?>
         <?php elseif($act=='cad'): ?>
-        <fieldset>
+        <fieldset class=cadMembros>
             <legend>CADASTRO DE MEMBROS</legend>
          <table>
          <form class="font_1" id="cadastro" action="../paginas/add.php?act=cad" method="POST">
@@ -111,6 +124,11 @@
                  }
              }
              ?>
+             <div class="foto">
+                  <input type=file>
+                  <img />
+                  <input type=button class=hide value="Adicionar outro">
+             </div>
              <tr><td></td><td align="right"><input type="submit" value="GRAVA">
                &nbsp<input type="reset" value="LIMPA"></td></tr>
          </form>
