@@ -10,57 +10,25 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $(input).next()
-                .attr('src', e.target.result)
-            };
-            reader.readAsDataURL(input.files[0]);
-        }else {
-            var img = input.value;
-            $(input).next().attr('src',img);
-        }
-    } 
-
-function verificaMostraBotao(){
-    $('input[type=file]').each(function(index){
-        if ($('input[type=file]').eq(index).val() != ""){
-            readURL(this);
-            $('.hide').show();
-        }
-    });
+        function readImage() {
+    if (this.files && this.files[0]) {
+        var file = new FileReader();
+        file.onload = function(e) {
+            document.getElementById("preview").src = e.target.result;
+        };       
+        file.readAsDataURL(this.files[0]);
+    }
 }
 
-$('input[type=file]').on("change", function(){
-  verificaMostraBotao();
-});
-
-$('.hide').on("click", function(){
-    $(document.body).append($('<input />', {type: "file" }).change(verificaMostraBotao()));
-    $(document.body).append($('<img />'));
-    //$('.hide').hide();
-});
-
+document.getElementById("imgChooser").addEventListener("change", readImage, false);
     </script>
     <style>
-        input[type=file] {
-    float: left;
-    display: block;
-}
-.hide {
-    //display: none;
-    float: left;
-}
+
     </style>
         
     </head>
     <body>
-        <div>
-                  <input type=file>
-                  <img />
-                  <input type=button class=hide value="Adicionar outro">
-        </div>
+        <input type=file id=imgChooser>
+        <img id=preview>
     </body>
 </html>
