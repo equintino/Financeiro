@@ -1,5 +1,42 @@
+<script type='text/javascript'>
+$(document).ready(function() {
+        $("#fileUpload").on('change', function() {
+          //Get count of selected files
+          var countFiles = $(this)[0].files.length;
+          var imgPath = $(this)[0].value;
+          var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+          var image_holder = $("#image-holder");
+          image_holder.empty();
+          if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+            if (typeof(FileReader) != "undefined") {
+              //loop for each file selected for uploaded.
+              for (var i = 0; i < countFiles; i++) 
+              {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                  $("<img />", {
+                    "src": e.target.result,
+                    "class": "thumb-image"
+                  }).appendTo(image_holder);
+                }
+                image_holder.show();
+                reader.readAsDataURL($(this)[0].files[i]);
+              }
+            } else {
+              alert("This browser does not support FileReader.");
+            }
+          } else {
+            alert("Pls select only images");
+          }
+        });
+      });
+</script>
 <?php 
-    $variaveis=array('NOME COMPLETO '=>'nome','DATA DE NASCIMENTO '=>'dt_nascimento','ENDEREÇO DE E-MAIL '=>'email','TELEFONE '=>'tel','CELULAR '=>'cel','ENDEREÇO DE RESIDÊNCIA '=> 'endereco','DATA DO BATISMO'=>'dt_batismo');
+    $dao=new Dao();
+    $search=new ModelSearchCriteria();
+    $search->settabela('lt_membros');
+    $lista=$dao->encontre($search);
+    $variaveis=array('NOME COMPLETO '=>'nome','DATA DE NASCIMENTO '=>'dt_nascimento','NATURALIDADE'=>'naturalde','IDENTIDADE'=>'rg','CPF'=>'cpf','TÍTULO ELEITORAL'=>'tit','SEXO'=>'sexo','ESCOLARIDADE'=>'escolaridade','PROFISSÃO'=>'prof','NOME DO PAI'=>'pai','NOME DA MÃE'=>'mae','ESTADO CIVIL'=>'estcivil','DATA DO CASAMENTO'=>'dt_casamento','NOME DO CONJUGÊ'=>'conjuge','ENDEREÇO DE E-MAIL '=>'email','TELEFONE '=>'tel','CELULAR '=>'cel','AV/RUA/TRAV'=>'tipo','ENDEREÇO DE RESIDÊNCIA '=> 'endereco','NÚMERO'=>'numero','COMPLEMENTO'=>'complemento','BAIRRO'=>'bairro','CIDADE'=>'cidade','ESTADO'=>'estado','CEP'=>'cep','DATA DO BATISMO'=>'dt_batismo','IGREJA DO BATISMO'=>'igbatismo','IGREJA DE ORIGEM'=>'igorigem','MEMBRO DESDE'=>'dt_ingresso');
     $act=$_GET['act'];
     $x=$_GET['pag'];
     $y=$x+5;
@@ -12,33 +49,7 @@
 <div  class="conteudo" >
     <div class="cadastro">
         <?php if($act=='lista'):?>
-               <?php 
-                  $dao=new Dao();
-                  $search=new ModelSearchCriteria();
-                  $search->settabela('lt_membros');
-                  $lista=$dao->encontre($search);
-                  //echo '<pre>';
-                  /*
-                  foreach($lista as $model){
-                     $ano=substr($model->getdt_casamento(),-4,4);
-                     $mes=substr($model->getdt_casamento(),-7,2);
-                     $dia=substr($model->getdt_casamento(),0,2);
-                     $model->setdt_casamento($ano.'-'.$mes.'-'.$dia);
-                     /*$ano=substr($model->getdt_nascimento(),-4,4);
-                     $mes=substr($model->getdt_nascimento(),-7,2);
-                     $dia=substr($model->getdt_nascimento(),0,2);
-                     $model->setdt_nascimento($ano.'-'.$mes.'-'.$dia);
-                     $ano=substr($model->getdt_ingresso(),-4,4);
-                     $mes=substr($model->getdt_ingresso(),-7,2);
-                     $dia=substr($model->getdt_ingresso(),0,2);
-                     $model->setdt_ingresso($ano.'-'.$mes.'-'.$dia);
-                     //print_r($model);die;
-                     $dao->grava($model);
-                     //echo '<pre>';
-                     //print_r($model);
-                  }
-                  */
-                  
+               <?php                   
                   $titulos=array('Nome','E-mail','Tel.','Nascimento','Endereço','Batismo','Membro desde','Estado Civil','Conjuge','Igreja do Batismo');
                   echo '<div class=paginacao>';
                     echo 'Páginas ';
@@ -52,10 +63,20 @@
                   }
         echo '<fieldset class=lista><legend><a href='.Utils::createLink('cadastro',array('act'=>'lista','pag'=>$x-4)).' '.$class.' ><< </a> FICHA DE MEMBROS <a href='.Utils::createLink('cadastro',array('act'=>'lista','pag'=>$x+4,'contador'=>count($lista))).' '.$class2.'> >> </a></legend>';
            echo '<table cellspacing=0 border=1>';
+            echo '<tr><td colspan=7 class=divisao>&nbsp</td><tr>';
                   foreach($lista as $keys => $item){
                     if($x < $keys && $keys < $y){
                        if($item->getnome()){
-                        echo '<tr><td class="nome">'.$titulos[0].' </td><td class=dados colspan=3>&nbsp'.$item->getnome().'</td><td class=nome2>'.$titulos[3].' </td><td class=dados>&nbsp'.  ModelValidador::data($item->getdt_nascimento()).'</td></tr>';
+                        echo '<tr><td class="nome">'.$titulos[0].' </td><td class=dados colspan=3>&nbsp'.$item->getnome().'</td><td class=nome2>'.$titulos[3].' </td><td class=dados>&nbsp'.ModelValidador::data($item->getdt_nascimento()).'</td>';
+                    if(substr($item->getfoto(),0,7)=='imagens'){
+                        echo '<td width="250" height="50" rowspan="5" valign="top">';//<td class=fotoMembros>';
+                    //echo $item->getfoto();
+                     //echo '<div class=fotoMembros>';
+                      echo '<span class=fotoMembros><img src="'.$item->getfoto().'" /></span><br><a href="../web/index.php?pagina=cadastro&act=cad&pag=0&id='.$item->getid().'" >&nbsp&nbsp&nbsp&nbspEditar Dados</a>';
+                     //echo '</div>';
+                    echo '</td>';
+                    }
+                    echo '</tr>';
                        }
                        if($item->gettel()||$item->getcel()||$item->getemail()){
                           if($item->getemail()){
@@ -99,36 +120,54 @@
                        if($item->getdt_batismo() && $item->getdt_batismo()!='0000-00-00'){
                         echo '<tr><td class="nome col1">'.$titulos[5].' </td><td class="dados col2">&nbsp'.ModelValidador::data($item->getdt_batismo()).'</td><td class="nome3 col3">'.$titulos[9].'</td><td class="dados col4">&nbsp'.$item->getigbatismo().'</td><td class="nome2 col5">'.$titulos[6].' </td><td class="dados col6">'.  ModelValidador::data($item->getdt_ingresso()).'</td></tr>';
                        }
-                     echo '<tr><td colspan=6 class=divisao>&nbsp</td><tr>';
+                     echo '<tr><td colspan=7 class=divisao>&nbsp</td><tr>';
                      //$y++;
                     }elseif($keys > $y){
                        break;
                     }
+                    //echo substr($item->getfoto(),0,7);
                   }
                        echo '</table>';
       echo '</fieldset>';
                ?>
-        <?php elseif($act=='cad'): ?>
+        <?php 
+         elseif($act=='cad'): 
+            @$search->setid($_GET['id']);
+         //print_r($search);
+            $dados=$dao->encontrePorId($search);
+            //echo '<pre>';
+            //print_r($dados);die;
+        ?>
         <fieldset class=cadMembros>
             <legend>CADASTRO DE MEMBROS</legend>
          <table>
-         <form class="font_1" id="cadastro" action="../paginas/add.php?act=cad" method="POST">
-             <?php foreach($variaveis as $keys => $item){
-                 if($item=='batizado'){
-                    echo '<tr><td align=right>* '.$keys.': </td><td><input type=radio value=S name='.$item.' required> SIM ';
-                    echo '<input type=radio value=N name='.$item.'> NÃO</td></tr>';
-                 }elseif($item=='email'){
-                    echo "<tr><td align=\"right\"> $keys: </td><td><input type=\"text\" name=\"".$item."\" size=\"40\" / ></td></tr>";
+         <form class="font_1" enctype="multipart/form-data"  id="cadastro" action="../paginas/add.php?act=cad" method="POST">
+             <?php 
+             foreach($variaveis as $keys => $item){
+                $classe='get'.$item;
+                //echo $dados->getid();die;
+                echo '<input type=hidden name=id value="'.$dados->getid().'">';
+                 if($item=='email'){
+                    echo "<tr><td align=\"right\"> $keys: </td><td><input type=\"text\" name=\"".$item."\" size=\"40\" value=".$dados->getemail()." ></td></tr>";
+                 }elseif(substr($item,0,2)=='dt'){ 
+                    if(ModelValidador::data($dados->$classe())=='//'){
+                       $data_=null;
+                    }else{
+                       $data_= ModelValidador::data($dados->$classe());
+                    }
+                    echo "<tr><td align=\"right\">$keys: </td><td><input type=\"text\" name=\"".$item."\" size=\"40\" value='".$data_."' ></td></tr>";
                  }else{
-                    echo "<tr><td align=\"right\">* $keys: </td><td><input type=\"text\" name=\"".$item."\" size=\"40\" / required></td></tr>";
+                    echo "<tr><td align=\"right\">$keys: </td><td><input type=\"text\" name=\"".$item."\" size=\"40\" value='".$dados->$classe()."' ></td></tr>";
                  }
              }
              ?>
+            <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
              <div class="foto">
-                  <input type=file>
-                  <img />
-                  <input type=button class=hide value="Adicionar outro">
-             </div>
+                  <div id="wrapper" style="margin-top: 20px;">
+                     <input id="fileUpload" name="foto" multiple="multiple" type="file"/> 
+                     <div id="image-holder">Inserir Foto</div>
+                  </div>
+             </div>            
              <tr><td></td><td align="right"><input type="submit" value="GRAVA">
                &nbsp<input type="reset" value="LIMPA"></td></tr>
          </form>

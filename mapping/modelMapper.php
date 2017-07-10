@@ -130,5 +130,8 @@
 	if (array_key_exists('naturalde', $properties)){
 	  $model->setnaturalde($properties['naturalde']);
 	}
+	if (array_key_exists('foto', $properties)){
+	  $model->setfoto($properties['foto']);
+	}
   } 
  }

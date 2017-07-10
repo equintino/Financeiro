@@ -42,3 +42,7 @@ $('.hide').on("click", function(){
     $(document.body).append($('<img />'));
     $('.hide').hide();
 });
+function teste(x){
+    var x;
+    alert(x);
+}

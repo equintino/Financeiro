@@ -129,8 +129,8 @@ body{
     margin: 0 40px;
 }
 .lista{
-    width: 780px;
-    margin-left: -50px;
+    width: 880px;
+    margin-left: -100px;
     #height: 835px;
     //overflow: auto;
     #background-color: wheat;
@@ -178,7 +178,7 @@ body{
     width: 12%;
 }
 .col3{
-    width: 18%;
+    width: 22%;
 }
 .col4{
     width: 28%;
@@ -217,7 +217,14 @@ body{
 .foto{
     float: right;
     clear: both;
-    border: 1px solid red;
+    //border: 1px solid red;
+}
+.thumb-image, .fotoMembros > img{
+    max-height: 150px;
+    max-width: 200px;
+    padding: 4px;
+    background: white;
+    //border: 1px solid red;
 }
 /*
 #teste { position:relative; }

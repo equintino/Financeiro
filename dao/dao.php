@@ -17,9 +17,9 @@
    }
    public function encontrePorId(ModelSearchCriteria $search=null){
         if($search->getid() != null){
-           $row = $this->query('SELECT * FROM `'.$search->gettabela().'` WHERE excluido = 0 and id = ' . (int) $search->getid())->fetch();
+           $row = $this->query('SELECT * FROM `'.$search->gettabela().'` WHERE excluido = "0" and id = ' . (int) $search->getid())->fetch();
         }else{ 
-           $row = $this->query('SELECT * FROM `'.$search->gettabela().'` WHERE excluido = 0')->fetchAll();
+           $row = $this->query('SELECT * FROM `'.$search->gettabela().'` WHERE excluido = "0" ')->fetchAll();
         }
         if (!$row) {
             return null;
@@ -72,17 +72,16 @@
         $model->setexcluido(0);
         $model->setcriado($now);
         $model->setmodificado($now);        
-        $sql = 'INSERT INTO `ibad`.`lt_membros` (`id`,`nome`,`email`,`tel`,`endereco`,`dt_batismo`,`dt_nascimento`,`criado`,`modificado`,`excluido`,`dt_ingresso`,`dt_casamento`,`conjuge`,`igbatismo`,`estcivil`,`tit`,`escolaridade`,`rg`,`pai`,`bairro`,`cel`,`sexo`,`mae`,`cep`,`estado`,`prof`,`cidade`,`cpf`,`igorigem`,`tipo`,`numero`,`complemento`,`naturalde`) VALUES (:id,:nome,:email,:tel,:endereco,:dt_batismo,:dt_nascimento,:criado,:modificado,:excluido,:dt_ingresso,:dt_casamento,:conjuge,:igbatismo,:estcivil,:tit,:escolaridade,:rg,:pai,:bairro,:cel,:sexo,:mae,:cep,:estado,:prof,:cidade,:cpf,:igorigem,:tipo,:numero,:complemento,:naturalde)';
+        $sql = 'INSERT INTO `ibad`.`lt_membros` (`id`,`nome`,`email`,`tel`,`endereco`,`dt_batismo`,`dt_nascimento`,`criado`,`modificado`,`excluido`,`dt_ingresso`,`dt_casamento`,`conjuge`,`igbatismo`,`estcivil`,`tit`,`escolaridade`,`rg`,`pai`,`bairro`,`cel`,`sexo`,`mae`,`cep`,`estado`,`prof`,`cidade`,`cpf`,`igorigem`,`tipo`,`numero`,`complemento`,`naturalde`,`foto`) VALUES (:id,:nome,:email,:tel,:endereco,:dt_batismo,:dt_nascimento,:criado,:modificado,:excluido,:dt_ingresso,:dt_casamento,:conjuge,:igbatismo,:estcivil,:tit,:escolaridade,:rg,:pai,:bairro,:cel,:sexo,:mae,:cep,:estado,:prof,:cidade,:cpf,:igorigem,:tipo,:numero,:complemento,:naturalde,:foto)';
 	$search = new ModelSearchCriteria();
         $search->settabela('lt_membros');
-        //print_r($model);die;
         return $this->execute($sql, $model);
    }
    private function update(Model $model){
         date_default_timezone_set("Brazil/East");
         $now = mktime (date('H'), date('i'), date('s'), date("m")  , date("d"), date("Y"));
         $model->setmodificado($now);
-        $sql = 'UPDATE `ibad`.`lt_membros` SET id = :id, nome = :nome, email = :email, tel = :tel, endereco = :endereco, dt_batismo = :dt_batismo, dt_nascimento = :dt_nascimento, criado = :criado, modificado = :modificado, excluido = :excluido, dt_ingresso = :dt_ingresso, dt_casamento = :dt_casamento, conjuge = :conjuge, igbatismo = :igbatismo, estcivil = :estcivil, tit = :tit, escolaridade = :escolaridade, rg = :rg, pai = :pai, bairro = :bairro, cel = :cel, sexo = :sexo, mae = :mae, cep = :cep, estado = :estado, prof = :prof, cidade = :cidade, cpf = :cpf, igorigem = :igorigem, tipo = :tipo, numero = :numero, complemento = :complemento, naturalde = :naturalde WHERE id = :id ';
+        $sql = 'UPDATE `ibad`.`lt_membros` SET id = :id, nome = :nome, email = :email, tel = :tel, endereco = :endereco, dt_batismo = :dt_batismo, dt_nascimento = :dt_nascimento, criado = :criado, modificado = :modificado, excluido = :excluido, dt_ingresso = :dt_ingresso, dt_casamento = :dt_casamento, conjuge = :conjuge, igbatismo = :igbatismo, estcivil = :estcivil, tit = :tit, escolaridade = :escolaridade, rg = :rg, pai = :pai, bairro = :bairro, cel = :cel, sexo = :sexo, mae = :mae, cep = :cep, estado = :estado, prof = :prof, cidade = :cidade, cpf = :cpf, igorigem = :igorigem, tipo = :tipo, numero = :numero, complemento = :complemento, naturalde = :naturalde, foto = :foto WHERE id = :id ';
         return $this->execute($sql, $model);
    }
    private function insert2(Model $model){
@@ -145,7 +144,7 @@
         return $model;
    }
    private function getParams(Model $model){
-        $params = array(':id'=> $model->getid(),':nome'=> $model->getnome(),':email'=> $model->getemail(),':tel'=> $model->gettel(),':endereco'=> $model->getendereco(),':dt_batismo'=> $model->getdt_batismo(),':dt_nascimento'=> $model->getdt_nascimento(),':criado'=> $model->getcriado(),':modificado'=> $model->getmodificado(),':excluido'=> $model->getexcluido(),':dt_ingresso'=> $model->getdt_ingresso(),':dt_casamento'=> $model->getdt_casamento(),':conjuge'=> $model->getconjuge(),':igbatismo'=> $model->getigbatismo(),':estcivil'=> $model->getestcivil(),':tit'=> $model->gettit(),':escolaridade'=> $model->getescolaridade(),':rg'=> $model->getrg(),':pai'=> $model->getpai(),':bairro'=> $model->getbairro(),':cel'=> $model->getcel(),':sexo'=> $model->getsexo(),':mae'=> $model->getmae(),':cep'=> $model->getcep(),':estado'=> $model->getestado(),':prof'=> $model->getprof(),':cidade'=> $model->getcidade(),':cpf'=> $model->getcpf(),':igorigem'=> $model->getigorigem(),':tipo'=> $model->gettipo(),':numero'=> $model->getnumero(),':complemento'=> $model->getcomplemento(),':naturalde'=> $model->getnaturalde(),);
+        $params = array(':id'=> $model->getid(),':nome'=> $model->getnome(),':email'=> $model->getemail(),':tel'=> $model->gettel(),':endereco'=> $model->getendereco(),':dt_batismo'=> $model->getdt_batismo(),':dt_nascimento'=> $model->getdt_nascimento(),':criado'=> $model->getcriado(),':modificado'=> $model->getmodificado(),':excluido'=> $model->getexcluido(),':dt_ingresso'=> $model->getdt_ingresso(),':dt_casamento'=> $model->getdt_casamento(),':conjuge'=> $model->getconjuge(),':igbatismo'=> $model->getigbatismo(),':estcivil'=> $model->getestcivil(),':tit'=> $model->gettit(),':escolaridade'=> $model->getescolaridade(),':rg'=> $model->getrg(),':pai'=> $model->getpai(),':bairro'=> $model->getbairro(),':cel'=> $model->getcel(),':sexo'=> $model->getsexo(),':mae'=> $model->getmae(),':cep'=> $model->getcep(),':estado'=> $model->getestado(),':prof'=> $model->getprof(),':cidade'=> $model->getcidade(),':cpf'=> $model->getcpf(),':igorigem'=> $model->getigorigem(),':tipo'=> $model->gettipo(),':numero'=> $model->getnumero(),':complemento'=> $model->getcomplemento(),':naturalde'=> $model->getnaturalde(),':foto'=> $model->getfoto(),);
 	 return $params;
    }
    private function getParams2(Model $model){

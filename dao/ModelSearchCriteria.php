@@ -344,4 +344,12 @@
           $this->naturalde = $naturalde;
           return $this;
       }
+   private $foto;
+       public function getfoto(){
+        return $this->foto;
+      }
+      public function setfoto($foto){
+          $this->foto = $foto;
+          return $this;
+      }
 }

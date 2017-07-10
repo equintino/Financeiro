@@ -1,25 +1,36 @@
 <?php
   include_once '../dao/Dao.php';
+  //include_once '../dao/UserDao.php';
   include_once '../model/Model.php';
-  include_once '../config/Config.php';
+  //include_once '../config/Config.php';
   include_once '../mapping/modelMapper.php';
   include_once '../dao/ModelSearchCriteria.php';
+  //include_once '../dao/UserSearchCriteria.php';
   include_once '../validacao/ModelValidador.php';
+  include_once '../validacao/valida_cookies.php';
+  
   $dao = new Dao();
   $model = new Model();
   @$mes = ModelValidador::tirarAcento($_POST['mes']);
   @$ano = $_POST['ano'];
+  $act=$_GET['act'];
   foreach($_POST as $key => $item){
      if($key=='dia'){
+     //print_r(strstr($key,'_',true));die;
         $key='dt';
         $item=$_POST['ano'].'-'.ModelValidador::numeroMes($mes).'-'.$item;
+     }elseif(strstr($key,'_',true)=='dt'){ 
+        $ano=str_replace('/','',strrchr($item,'/'));
+        $mes=substr($item,3,2);
+        $dia=substr($item,0,2);
+        $item=$ano.'-'.$mes.'-'.$dia;
      }elseif($key=='movimentacao'){
         $key=$item;
      }elseif($key=='ano'){
         if(strlen($item)==2){
            $item='20'.$item;
         }
-     }elseif($key=='tipo'){
+     }elseif($key=='tipo' && $act=='rel'){
         $key='diz_ofe';
         if($item=='dizimo'){
            $item='diz';
@@ -37,8 +48,10 @@
      }elseif($key=='mes'){
         $item=ModelValidador::numeroMes($item);
      }
-    $classe='set'.$key;
-    $model->$classe($item);
+     if($key!='MAX_FILE_SIZE'){
+        $classe='set'.$key;
+        $model->$classe($item);
+     }
   }
   ////print_r($_POST);
   //echo ModelValidador::nomeMes('01');
@@ -47,11 +60,62 @@
   /*echo '<pre>';
   PRINT_R($_POST);
   PRINT_R($_GET);DIE;*/
-  $act=$_GET['act'];
+  //echo '<img src=imagem.php?tabela=lt_membros&id=7 />';
+  //print_r($_FILES);die;
   if($act == 'cad'){
+     ////// enviando arquivo /////////
+	$target_dir = "../web/imagens/fotos/";
+	$target_file = $target_dir . basename($_FILES["foto"]["name"]);
+	$uploadOk = 1;
+
+	$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+	// Check if image file is a actual image or fake image
+	if(isset($_POST["submit"])) {
+	    $check = getimagesize($_FILES["foto"]["tmp_name"]);
+	    if($check !== false) {
+		echo "O arquivo é uma imagem - " . $check["mime"] . ".";
+		$uploadOk = 1;
+	    } else {
+		echo "O arquivo não é uma imagem.";
+		$uploadOk = 0;
+	    }
+	}
+	// Check if file already exists
+	if (file_exists($target_file)) {
+	    valida_cookies::popup("Arquivo já existe.");
+	    $uploadOk = 0;
+	}
+	// Check file size
+	if ($_FILES["foto"]["size"] > 3000000 || $_FILES["foto"]["size"] == 0) {
+	    valida_cookies::popup("Tamanho do arquivo maior que 3Mb.");
+	    $uploadOk = 0;
+	}
+	// Allow certain file formats
+	if($imageFileType != "jpg" ) {
+            valida_cookies::popup('Favor inserir imagem do formato jpg.');
+	    $uploadOk = 0;
+	}
+	// Check if $uploadOk is set to 0 by an error
+	if ($uploadOk == 0) {
+	    valida_cookies::popup("O arquivo não pode ser salvo.");
+	// if everything is ok, try to upload file
+	} else {
+	    if (move_uploaded_file($_FILES["foto"]["tmp_name"], $target_file)) {
+		echo "The file ". basename( $_FILES["foto"]["name"]). " has been uploaded.";
+	    } else {
+		valida_cookies::popup("Erro no envio do arquivo.");
+	    }
+	}
+
+	///// /////// //////// //////
+	$foto = str_replace('../web/','',$target_file);
+        $model->setfoto($foto); 
+        //echo '<pre>';
      //print_r($model);die;
+     $model->setexcluido(0);
      $dao->grava($model);
-  }
+     }
+  
   if($act == 'rel'){ 
      //print_r($model);die;
      $dao->grava2($model);

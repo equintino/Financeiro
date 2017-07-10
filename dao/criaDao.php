@@ -2,7 +2,7 @@
     $filename='dao.php';
     $mode='w+';
     $handle=fopen($filename, $mode);
-    $variaveis=array('id','nome','email','tel','endereco','dt_batismo','dt_nascimento','criado','modificado','excluido','dt_ingresso','dt_casamento','conjuge','igbatismo','estcivil','tit','escolaridade','rg','pai','bairro','cel','sexo','mae','cep','estado','prof','cidade','cpf','igorigem','tipo','numero','complemento','naturalde');
+    $variaveis=array('id','nome','email','tel','endereco','dt_batismo','dt_nascimento','criado','modificado','excluido','dt_ingresso','dt_casamento','conjuge','igbatismo','estcivil','tit','escolaridade','rg','pai','bairro','cel','sexo','mae','cep','estado','prof','cidade','cpf','igorigem','tipo','numero','complemento','naturalde','foto');
     $tabela='`ibad`.`lt_membros`';
     $variaveis2=array('id','mes','dt','descricao','entrada','saida','diz_ofe','criado','modificado','excluido');
     $tabela2='ibad';
@@ -26,9 +26,9 @@
    }'."\r\n";
     $texto .= '   public function encontrePorId(ModelSearchCriteria $search=null){
         if($search->getid() != null){
-           $row = $this->query(\'SELECT * FROM `\'.$search->gettabela().\'` WHERE excluido = 0 and id = \' . (int) $search->getid())->fetch();
+           $row = $this->query(\'SELECT * FROM `\'.$search->gettabela().\'` WHERE excluido = "0" and id = \' . (int) $search->getid())->fetch();
         }else{ 
-           $row = $this->query(\'SELECT * FROM `\'.$search->gettabela().\'` WHERE excluido = 0\')->fetchAll();
+           $row = $this->query(\'SELECT * FROM `\'.$search->gettabela().\'` WHERE excluido = "0" \')->fetchAll();
         }
         if (!$row) {
             return null;
@@ -220,7 +220,7 @@
         $this->executeStatement($statement, $this->getParams($model));
         $search=new ModelSearchCriteria();
         if (!$model->getid()) {
-            return $this->encontrePorId($search->setid($this->getDb()->lastInsertId()));
+            //return $this->encontrePorId($search->setid($this->getDb()->lastInsertId()));
         }
         return $model;
    }'."\r\n";

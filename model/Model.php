@@ -43,6 +43,7 @@
  private $tabela;
  private $order;
  private $naturalde;
+ private $foto;
  public function getid(){
 	return $this->id;
  }
@@ -300,5 +301,11 @@
  }
  public function setnaturalde($naturalde ){
 	$this->naturalde=$naturalde;
+ }
+ public function getfoto(){
+	return $this->foto;
+ }
+ public function setfoto($foto ){
+	$this->foto=$foto;
  }
  }
