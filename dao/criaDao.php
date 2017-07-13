@@ -229,7 +229,7 @@
         $this->executeStatement($statement, $this->getParams2($model));
         $search=new ModelSearchCriteria();
         if (!$model->getid()) {
-             return $this->encontrePorId($search->setid($this->getDb()->lastInsertId()));
+             //return $this->encontrePorId($search->setid($this->getDb()->lastInsertId()));
         }
         return $model;
    }'."\r\n";

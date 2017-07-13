@@ -4,10 +4,7 @@
 }
   #rodape{
       width: 100%; 
-      #position: relative; 
       height: 58px; 
-      #bottom: auto; 
-      #top: 1050px;
       background-color: darkslategrey;
       padding: 10px 5px;
       color: white;
@@ -25,9 +22,6 @@
 }
 .menu{
     float: right;
-    #font-size: 250px;
-    #position: relative;
-    #margin-top: -4px;
 }
 .bnt{
     font-size: 16px;
@@ -36,13 +30,9 @@ a:link{
     text-decoration: none;
 }
 .conteudo{
-    #margin-left: 5px;
     font-family: sans-serif;
     height: 980px;
-    #width: 98%;
-    //border: solid 1px red;
     margin: 20px auto;
-    #overflow: auto;
 }
 .ref{
     margin-left: 510px;
@@ -57,7 +47,6 @@ a:link{
   margin: 0 auto; 
   width:1080px;
   padding-bottom:40px;
-  //border: 1px solid red;
 }
 .s6{
     left: 20px; 
@@ -74,14 +63,11 @@ body{
     background-position-x: 50%;
     background-position-y: 25%;
     background-size: 300px;
-    #backface-visibility: hidden;
     background-color: #f9fcc0;
 }
 .rel{
     float: left;
     width: 470px;
-    #margin: -20px 5px 0;
-    #border: 1px solid green;
 }
 .rel th, .resumo th{
     background-color: green;
@@ -97,8 +83,6 @@ body{
     float: right;
     width: 450px;
     margin: auto;
-    #margin-left: 0;
-    #border: 1px solid red;
 }
 .separa{
     background-color: blue;
@@ -116,7 +100,6 @@ body{
         #printable {
           background: url('../imagens/timbrado.png');
           position: absolute;
-          #margin: auto;
           left: 30%;
           top: 30%;
         }
@@ -131,11 +114,7 @@ body{
 .lista{
     width: 880px;
     margin-left: -100px;
-    #height: 835px;
-    //overflow: auto;
-    #background-color: wheat;
     opacity: 1;
-    //border: 1px solid red;
 }
 .lista table{
     width: 100%;
@@ -162,13 +141,11 @@ body{
 .nome2{
     text-align: right;
     background-color: #c0bf9b;
-    //background-color: rgba(106, 99, 99, 0.4);
     font-size: 17px;
 }
 .nome3{
     text-align: right;
     background-color: #c0bf9b;
-    //background-color: rgba(106, 99, 99, 0.4);
     font-size: 17px;
 }
 .col1{
@@ -196,7 +173,6 @@ body{
 .cadastro{
     margin: 50px auto;
     width: 680px;
-    #border: 1px solid red;
 }
 .info{
     position: absolute;
@@ -206,8 +182,6 @@ body{
 }
 .paginacao{
     float: right;
-    #border: 1px solid red;
-    #width: 200px;
     text-align: center;
 }
 .cadMembros{
@@ -217,22 +191,13 @@ body{
 .foto{
     float: right;
     clear: both;
-    //border: 1px solid red;
 }
 .thumb-image, .fotoMembros > img{
     max-height: 150px;
     max-width: 200px;
     padding: 4px;
     background: white;
-    //border: 1px solid red;
 }
-/*
-#teste { position:relative; }
-#upload { position:absolute; top:0;left:0; border:1px solid #ff0000; opacity:0.01; z-index:1; }
-#texto { border:0px; background:#dedede; border-radius:4px; padding:5px; }
-#botao { border:1px solid #dedede; background:#989898; color:#ffffff; border-radius:4px; padding:5px }
-*/
-//////
 input[type=file] {
     float: left;
     display: block;

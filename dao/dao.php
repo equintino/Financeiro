@@ -35,6 +35,7 @@
         return $this->update($model);
    }
    public function grava2(Model $model){
+      //print_r($model);die;
         if ($model->getid() === null) {
             return $this->insert2($model);
         }
@@ -130,7 +131,7 @@
         $this->executeStatement($statement, $this->getParams2($model));
         $search=new ModelSearchCriteria();
         if (!$model->getid()) {
-             return $this->encontrePorId($search->setid($this->getDb()->lastInsertId()));
+             //return $this->encontrePorId($search->setid($this->getDb()->lastInsertId()));
         }
         return $model;
    }

@@ -3,61 +3,6 @@
        display: none;
     }
 </style>
-<script>
-   function movimento(mov){
-      var mov=document.getElementById('movimentacao').value;
-      if(mov=='entrada'){
-         document.querySelector('#tipo').style.display='inline';
-      }else if(mov=='saida'){
-         document.querySelector('#tipo').style.display='none';
-      }
-   }
-   function conclui(mes){
-      fecha = confirm('Deseja realmente fechar o relatório?');
-      alert(mes);
-      if(fecha){
-         window.location.assign('index.php?pagina=relMensal&conclui=1&act=rel&mes='+mes+'');
-      }
-   }   
-function abrir(URL) {
-
-  var width = 1050;
-  var height = 2050;
-
-  var left = 99;
-  var top = 99;
-
-  window.open(URL,'janela', 'width='+width+', height='+height+', top='+top+', left='+left+', scrollbars=yes, status=no, toolbar=no, location=no, directories=no, menubar=no, resizable=no, fullscreen=no');
-}
-function lista(membros){
-   var y = membros;  
-      //alert(y);
-   //var y = new Array('casa','carro');
-   //var y = array new(lista);
-   //alert(y[0]);
-   var x = document.getElementsByTagName('input');
-   var i;
-   for(i=3;i<5;i++){
-      if(x[i].checked==true){
-         resposta=x[i].value;
-      }
-   }
-   //alert(y[0]);
-   if(resposta=='dizimo'){
-      var b='<select name=descricao>'; 
-      var c;
-         for(i=0;i<(y.length);i++){
-            c +='<option value=\''+y[i]+'\'>'+y[i]+'</option>';
-         } 
-            //alert(c);
-      var d='</select>';
-      document.getElementById('descricao').innerHTML=b+c+d;
-   }else{
-      var a='<input type="text" name="descricao" value="OFERTA" size="40" />';
-      document.getElementById('descricao').innerHTML=a;
-   }
-}
-</script>
 <?php
     $variaveis=array('dt','descricao','entrada','saida','diz_ofe');
     $dao = new Dao();
@@ -74,9 +19,13 @@ function lista(membros){
     @$conclui=$_GET['conclui'];
     $link="../web/resumo.php?mes=".ModelValidador::numeroMes(ModelValidador::tirarAcento($mes))."&ano=$ano";
 ?>
+<script>
+   var link='<?= $link; ?>';
+</script>
+   
 <div class="imprime">
     <!--<a href="../web/resumo.php?mes=<?= ModelValidador::numeroMes(ModelValidador::tirarAcento($mes)); ?>&ano=<?= $ano ?>" target="_blanck">-->
-        <button onclick="abrir('<?= $link ?>')">IMPRIMIR</button>
+        <button id='imprimeRel' >IMPRIMIR</button><!--onclick="abrir('<?= $link ?>')"-->
 </div>
      <div class="conteudo">
          <?php 
@@ -111,14 +60,14 @@ function lista(membros){
                  <tr>
                      <td align="right">MOVIMENTAÇÃO: </td>
                      <td>
-                     <select id="movimentacao" name="movimentacao" onchange="movimento()" >
+                     <select id="movimentacao" name="movimentacao" >
                          <option></option>
                          <option value="entrada">ENTRADA</option>
                          <option value="saida">SAÍDA</option>
                      </select>
                      <input type="hidden" name="mes" value="<?= $mes; ?>" />
                      <input type="hidden" name="ano" value="<?= $ano; ?>" />
-                     <span id="tipo" onchange="lista(membros)">
+                     <span id="tipo" >
                         <input type="radio" name="tipo" value="dizimo"/>Dízimo
                         <input type="radio" name="tipo" value="oferta"/>Oferta
                      </span>
@@ -127,7 +76,8 @@ function lista(membros){
                  <tr><td align="right">VALOR: </td><td><input type="text" name="valor" size="10" /></td></tr>
                  <br>
                  <tr>
-                     <td></td><td align="right"><input type="reset" value="LIMPA">&nbsp<input type="submit" value="GRAVA">&nbsp<input type="button" value="CONCLUI" onclick=conclui('<?= ModelValidador::numeroMes($mes).'/'.$ano; ?>');></td>
+                 <input name='mesAno' type='hidden' value='<?= ModelValidador::numeroMes($mes).'/'.$ano; ?>' >
+                     <td></td><td align="right"><input type="reset" value="LIMPA">&nbsp<input type="submit" value="GRAVA"><br><br><input id="conclui" type="button" value="CONCLUI" ></td>
                  </tr>
          </table>
          </form>
@@ -139,13 +89,15 @@ function lista(membros){
                 $mesAnterior='dezembro';
                 $ano=$ano-1;
              }
-             //echo $ano;
              $search=new ModelSearchCriteria();
              $search->setano($ano);
              $search->settabela('saldo');
              $search->setmes(strtolower(ModelValidador::tirarAcento($mesAnterior)));
-             //print_r($search);die;
              $dados=$dao->encontre($search);
+             if(!$dados){
+                echo 'Relatório inexistente';
+                die;
+             }
              foreach($dados as $saldomes); 
              $saldo=$saldoAnterior=($saldomes->getsaldo()); 
              $search->setmes(ModelValidador::numeroMes(ModelValidador::tirarAcento($mes)));
@@ -155,15 +107,10 @@ function lista(membros){
              $search->settabela($ano);
              $search->setorder('dt');
              $search->setano(null);
-             //print_r($search);die;
-             //$search->setmes(null); 
              $relatorios=$dao->encontre($search); 
-             //print_r($relatorios);die;
              if(!$relatorios){
-               //if(!isset($saldomes)){
                   echo 'Relatório do mês de '.$mes.' é inexistente.';
                   die;
-               //}
              } 
              foreach($relatorios as $datas); 
           ?>
@@ -255,7 +202,6 @@ function lista(membros){
              <?php 
                 echo '<tr class=totais><td>SALDO ANTERIOR</td><td></td><td align=right>'.number_format($saldoAnterior,'2',',','.').'</td></tr>';
                 foreach($resumo as $cel){
-                 //print_r($resumo);die;
                    if($cel['saida'] !=0){
                       echo '<tr><td>'.strtoupper($cel['descricao']).'</td><td align=right>'.number_format($cel['saida'],'2',',','.').'</td><td></td></tr>';
                    }elseif($cel['descricao']=='oferta'||$cel['descricao']=='OFERTA'){
@@ -282,7 +228,7 @@ function lista(membros){
                      $model->setano($ano);
                      $model->setmes($mes);
                      $model->settabela('saldo');
-
+                     print_r($model);die;
                      $dao->grava3($model);
                    }
                 }

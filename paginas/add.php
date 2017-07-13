@@ -117,6 +117,7 @@
      }
   
   if($act == 'rel'){ 
+     //echo '<pre>';
      //print_r($model);die;
      $dao->grava2($model);
   }

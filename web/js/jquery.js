@@ -26,7 +26,66 @@ $(document).ready(function() {
       } else {
          alert("Selecione somente imagem");
       }
-   });
+   });       
+          $('#relatorio').click(function(){
+            var resposta=prompt('Quaal o número do mês/ano?');
+            if(resposta==''){
+               alert('Insira o mês/ano.');
+               var resposta=prompt('Quaal o número do mês/ano?');
+            }
+            if(resposta){
+                $(location).attr('href','index.php?pagina=relMensal&mes='+resposta+'&act=rel');
+            }
+          })       
+          $('#movimento').click(function(){
+            var resposta=prompt('Quaal o número do mês/ano?');
+            if(resposta==''){
+               alert('Insira o mês/ano.');
+               var resposta=prompt('Quaal o número do mês/ano?');
+            }
+            if(resposta){
+                $(location).attr('href','index.php?pagina=relMensal&mes='+resposta+'&act=cad');
+            }
+          })         
+      $('#tipo').hide();
+      $('#movimentacao').change(function(){
+         var mov=$('#movimentacao').val();
+         if(mov=='entrada'){
+            $('#tipo').show();
+         }else{
+            $('#tipo').hide();
+         }
+      })
+      $('#tipo').click(function(){
+         var x=$("input:checked").val();
+         if(x=='oferta'){
+            $('#descricao')
+               .text('OFERTA');
+         }else if(x=='dizimo'){
+            y=membros;
+            var b='<select name=descricao>'; 
+            var c;
+               for(i=0;i<(y.length);i++){
+                  c +='<option value=\''+y[i]+'\'>'+y[i]+'</option>';
+               } 
+            var d='</select>';
+            $('#descricao')
+               .html(b+c+d);
+         }
+      }) 
+      $('#conclui').click(function(){
+        var mesAno=$('input[name="mesAno"]').val();
+        fecha = confirm('Deseja realmente fechar o relatório?');
+        var url = 'index.php?pagina=relMensal&conclui=1&act=rel&mes='+mesAno+'';
+        if(fecha){
+            $(location).attr('href',url);
+        }
+      })
+      $('#imprimeRel').click(function(){
+                var w = window.open(link, "popupWindow", "width=1050, height=2050, scrollbars=yes");
+                var $w = $(w.document.body);
+                $w.html();
+      })
 });
 
 
