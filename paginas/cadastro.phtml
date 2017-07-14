@@ -1,3 +1,7 @@
+<script>
+   $(document).ready(function(){
+   })
+</script>
 <?php 
     $dao=new Dao();
     $search=new ModelSearchCriteria();
@@ -36,11 +40,8 @@
                        if($item->getnome()){
                         echo '<tr><td class="nome">'.$titulos[0].' </td><td class=dados colspan=3>&nbsp'.$item->getnome().'</td><td class=nome2>'.$titulos[3].' </td><td class=dados>&nbsp'.ModelValidador::data($item->getdt_nascimento()).'</td>';
                     if(substr($item->getfoto(),0,7)=='imagens'){
-                        echo '<td width="250" height="50" rowspan="5" valign="top">';//<td class=fotoMembros>';
-                    //echo $item->getfoto();
-                     //echo '<div class=fotoMembros>';
+                        echo '<td width="250" height="50" rowspan="5" valign="top">';
                       echo '<span class=fotoMembros><img src="'.$item->getfoto().'" /></span><br><a href="../web/index.php?pagina=cadastro&act=cad&pag=0&id='.$item->getid().'" >&nbsp&nbsp&nbsp&nbspEditar Dados</a>';
-                     //echo '</div>';
                     echo '</td>';
                     }
                     echo '</tr>';
@@ -88,11 +89,9 @@
                         echo '<tr><td class="nome col1">'.$titulos[5].' </td><td class="dados col2">&nbsp'.ModelValidador::data($item->getdt_batismo()).'</td><td class="nome3 col3">'.$titulos[9].'</td><td class="dados col4">&nbsp'.$item->getigbatismo().'</td><td class="nome2 col5">'.$titulos[6].' </td><td class="dados col6">'.  ModelValidador::data($item->getdt_ingresso()).'</td></tr>';
                        }
                      echo '<tr><td colspan=7 class=divisao>&nbsp</td><tr>';
-                     //$y++;
                     }elseif($keys > $y){
                        break;
                     }
-                    //echo substr($item->getfoto(),0,7);
                   }
                        echo '</table>';
       echo '</fieldset>';
@@ -105,7 +104,7 @@
         <fieldset class=cadMembros>
             <legend>CADASTRO DE MEMBROS</legend>
          <table>
-         <form class="font_1" enctype="multipart/form-data"  id="cadastro" action="../paginas/add.php?act=cad" method="POST">
+         <form class="font_1" enctype="multipart/form-data"  id="cadastro" action="#" method="POST"><!--  ../paginas/add.php?act=cad  --> 
              <?php 
              foreach($variaveis as $keys => $item){
                 $classe='get'.$item;
@@ -119,6 +118,9 @@
                        $data_= ModelValidador::data($dados->$classe());
                     }
                     echo "<tr><td align=\"right\">$keys: </td><td><input type=\"text\" name=\"".$item."\" size=\"40\" value='".$data_."' ></td></tr>";
+                 }elseif($item=='sexo'){
+                    echo "<tr><td align=right>$keys: </td><td id=sexo align=center><input type=radio name=sexo value=masculino> Masculino ";
+                    echo "<input type=radio name=sexo value=femenino> Femenino </td></tr>";
                  }else{
                     echo "<tr><td align=\"right\">$keys: </td><td><input type=\"text\" name=\"".$item."\" size=\"40\" value='".$dados->$classe()."' ></td></tr>";
                  }
@@ -131,7 +133,9 @@
                      <div id="image-holder">Inserir Foto</div>
                   </div>
              </div>            
-             <tr><td></td><td align="right"><input type="submit" value="GRAVA">
+            <tr><td></td><td align="right">
+                    <button>GRAVA</button>
+            <!--<input type="submit" value="GRAVA">-->
                &nbsp<input type="reset" value="LIMPA"></td></tr>
          </form>
          </table>
