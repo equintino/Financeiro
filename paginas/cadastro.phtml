@@ -1,7 +1,17 @@
 <script>
    $(document).ready(function(){
+      $('.lista img').click(function(){
+           /* $(this).attr({
+               src:'imagens/fotos/Edmilson.jpg',
+               title:'Foto do Edmilson'
+            }) */
+            /*$(this).removeAttr('src').removeAttr('title')*/
+            //alert($('.lista span').hasClass('fotoMembros'));
+            /*$('.lista span').toggleClass('fotoMembros');*/
+      })
    })
 </script>
+
 <?php 
     $dao=new Dao();
     $search=new ModelSearchCriteria();
@@ -40,8 +50,8 @@
                        if($item->getnome()){
                         echo '<tr><td class="nome">'.$titulos[0].' </td><td class=dados colspan=3>&nbsp'.$item->getnome().'</td><td class=nome2>'.$titulos[3].' </td><td class=dados>&nbsp'.ModelValidador::data($item->getdt_nascimento()).'</td>';
                     if(substr($item->getfoto(),0,7)=='imagens'){
-                        echo '<td width="250" height="50" rowspan="5" valign="top">';
-                      echo '<span class=fotoMembros><img src="'.$item->getfoto().'" /></span><br><a href="../web/index.php?pagina=cadastro&act=cad&pag=0&id='.$item->getid().'" >&nbsp&nbsp&nbsp&nbspEditar Dados</a>';
+                        echo '<td width="250" height="50" rowspan="5" align="center">';
+                      echo '<span><img title="'.$item->getnome().'" src="'.$item->getfoto().'" /></span><br><a href="../web/index.php?pagina=cadastro&act=cad&pag=0&id='.$item->getid().'" >&nbsp&nbsp&nbsp&nbspEditar Dados</a>';
                     echo '</td>';
                     }
                     echo '</tr>';

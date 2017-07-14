@@ -109,6 +109,7 @@ $(document).ready(function() {
                monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez']
            });           
          })
+      $('.lista span').addClass('fotoMembros');
 });
 
 
