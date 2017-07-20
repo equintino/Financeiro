@@ -109,7 +109,12 @@ $(document).ready(function() {
                monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez']
            });           
          })
-      $('.lista span').addClass('fotoMembros');
+      $('.lista span').addClass('fotoMembros');     
+      var palavras = new Array('SALDO','TOTAIS');
+      $.each(palavras, function(index, value){
+         $('tr:contains('+value+')').css('background','darkgray');
+      })
+      $('.rel tr:even').css('background','darkgray');
 });
 
 

@@ -140,7 +140,7 @@
                  ?>
              </tr>
                      <?php 
-                       echo '<tr class=totais><td align=center>01</td><td>SALDO ANTERIOR</td><td align=center></td><td align=center></td><td align=center></td><td align=right>'.number_format($saldo,'2',',','.').'</td></tr>';
+                       echo '<tr><td align=center>01</td><td>SALDO ANTERIOR</td><td align=center></td><td align=center></td><td align=center></td><td align=right>'.number_format($saldo,'2',',','.').'</td></tr>';
                        foreach($relatorios as $relatorio){
                           //print_r($relatorio);
                          echo '<tr>';
@@ -200,7 +200,7 @@
            <?php $colunas=array('DESCRIÇÃO','SAÍDAS','ENTRADAS');?>
              <tr><?php foreach($colunas as $col)echo "<th>$col</th>";?></tr>
              <?php 
-                echo '<tr class=totais><td>SALDO ANTERIOR</td><td></td><td align=right>'.number_format($saldoAnterior,'2',',','.').'</td></tr>';
+                echo '<tr><td>SALDO ANTERIOR</td><td></td><td align=right>'.number_format($saldoAnterior,'2',',','.').'</td></tr>';
                 foreach($resumo as $cel){
                    if($cel['saida'] !=0){
                       echo '<tr><td>'.strtoupper($cel['descricao']).'</td><td align=right>'.number_format($cel['saida'],'2',',','.').'</td><td></td></tr>';
@@ -212,9 +212,9 @@
                 }
                 echo '<tr><td>OFERTAS</td><td></td><td align=right>'.number_format(array_sum($ofertas),'2',',','.').'</td></tr>';
                 echo '<tr><td>DIZIMOS</td><td></td><td align=right>'.number_format(array_sum($dizimo),'2',',','.').'</td></tr>';
-                echo '<tr class="totais"><td align=right>TOTAIS</td><td align=right>'.  number_format($somaSaida,'2',',','.').'</td><td align=right>'.number_format($somaEntrada,'2',',','.').'</td></tr>';
+                echo '<tr><td align=right>TOTAIS</td><td align=right>'.  number_format($somaSaida,'2',',','.').'</td><td align=right>'.number_format($somaEntrada,'2',',','.').'</td></tr>';
                 echo '<tr><td colspan=3 ></td></tr>';
-                echo '<tr class="totais"><td align=right colspan=2>SALDO PARA O MÊS SEGUINTE</td><td align=right>'.number_format($saldoAnterior+$somaEntrada-$somaSaida,'2',',','.').'</td></tr>';
+                echo '<tr><td align=right colspan=2>SALDO PARA O MÊS SEGUINTE</td><td align=right>'.number_format($saldoAnterior+$somaEntrada-$somaSaida,'2',',','.').'</td></tr>';
                 if($conclui==1){
                    $ano=substr($datas->getdt(),0,4);
                    $mes=ModelValidador::nomeMes(substr($datas->getdt(),5,2));

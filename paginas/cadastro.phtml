@@ -128,9 +128,11 @@
                     if($dados->getsexo()=='Masculino'){
                        $masculino='checked';
                        $femenino=null;
-                    }else{
+                    }elseif($dados->getsexo()=='Femenino'){
                        $femenino='checked';
                        $masculino=null;
+                    }else{
+                       $masculino=$femenino=null;
                     }
                     echo "<tr><td align=right>$keys: </td><td id=sexo align=center><input type=radio name=sexo value=masculino $masculino> Masculino ";
                     echo "<input type=radio name=sexo value=femenino $femenino> Femenino </td></tr>";
