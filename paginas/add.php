@@ -1,11 +1,8 @@
 <?php
   include_once '../dao/Dao.php';
-  //include_once '../dao/UserDao.php';
   include_once '../model/Model.php';
-  //include_once '../config/Config.php';
   include_once '../mapping/modelMapper.php';
   include_once '../dao/ModelSearchCriteria.php';
-  //include_once '../dao/UserSearchCriteria.php';
   include_once '../validacao/ModelValidador.php';
   include_once '../validacao/valida_cookies.php';
   
@@ -14,9 +11,9 @@
   @$mes = ModelValidador::tirarAcento($_POST['mes']);
   @$ano = $_POST['ano'];
   $act=$_GET['act'];
+  //print_r([$_POST,$_GET,$_FILES]);die;
   foreach($_POST as $key => $item){
      if($key=='dia'){
-     //print_r(strstr($key,'_',true));die;
         $key='dt';
         $item=$_POST['ano'].'-'.ModelValidador::numeroMes($mes).'-'.$item;
      }elseif(strstr($key,'_',true)=='dt'){ 
@@ -53,19 +50,17 @@
         $model->$classe($item);
      }
   }
-  ////print_r($_POST);
-  //echo ModelValidador::nomeMes('01');
   $model->settabela($ano);
-  //print_r($model);//die;
-  /*echo '<pre>';
-  PRINT_R($_POST);
-  PRINT_R($_GET);DIE;*/
-  //echo '<img src=imagem.php?tabela=lt_membros&id=7 />';
-  //print_r($_FILES);die;
   if($act == 'cad'){
+     //print_r($_POST);die;
+      if(array_key_exists('foto', $_POST)){
+           $foto=$_POST['foto'];
+      }else{
      ////// enviando arquivo /////////
 	$target_dir = "../web/imagens/fotos/";
-	$target_file = $target_dir . basename($_FILES["foto"]["name"]);
+            $target_file = $target_dir . basename($_FILES["foto"]["name"]);
+        
+        //echo $target_file;die;
 	$uploadOk = 1;
 
 	$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
@@ -109,6 +104,8 @@
 
 	///// /////// //////// //////
 	$foto = str_replace('../web/','',$target_file);
+      }
+      //echo $foto;die;
         $model->setfoto($foto); 
         //echo '<pre>';
      //print_r($model);die;

@@ -1,14 +1,10 @@
 <script>
    $(document).ready(function(){
-      $('.lista img').click(function(){
-           /* $(this).attr({
-               src:'imagens/fotos/Edmilson.jpg',
-               title:'Foto do Edmilson'
-            }) */
-            /*$(this).removeAttr('src').removeAttr('title')*/
-            //alert($('.lista span').hasClass('fotoMembros'));
-            /*$('.lista span').toggleClass('fotoMembros');*/
-      })
+      var original=$('.foto :hidden').val();
+      $('#image-holder img').attr('src', original);
+      $('#fileUpload').change(function(){
+         $('.foto :hidden').attr('value','');
+      })      
    })
 </script>
 
@@ -113,8 +109,8 @@
         ?>
         <fieldset class=cadMembros>
             <legend>CADASTRO DE MEMBROS</legend>
+             <form class="font_1" enctype="multipart/form-data"  id="cadastro" action="../paginas/add.php?act=cad" method="POST" >
          <table>
-         <form class="font_1" enctype="multipart/form-data"  id="cadastro" action="#" method="POST"><!--  ../paginas/add.php?act=cad  --> 
              <?php 
              foreach($variaveis as $keys => $item){
                 $classe='get'.$item;
@@ -129,8 +125,15 @@
                     }
                     echo "<tr><td align=\"right\">$keys: </td><td><input type=\"text\" name=\"".$item."\" size=\"40\" value='".$data_."' ></td></tr>";
                  }elseif($item=='sexo'){
-                    echo "<tr><td align=right>$keys: </td><td id=sexo align=center><input type=radio name=sexo value=masculino> Masculino ";
-                    echo "<input type=radio name=sexo value=femenino> Femenino </td></tr>";
+                    if($dados->getsexo()=='Masculino'){
+                       $masculino='checked';
+                       $femenino=null;
+                    }else{
+                       $femenino='checked';
+                       $masculino=null;
+                    }
+                    echo "<tr><td align=right>$keys: </td><td id=sexo align=center><input type=radio name=sexo value=masculino $masculino> Masculino ";
+                    echo "<input type=radio name=sexo value=femenino $femenino> Femenino </td></tr>";
                  }else{
                     echo "<tr><td align=\"right\">$keys: </td><td><input type=\"text\" name=\"".$item."\" size=\"40\" value='".$dados->$classe()."' ></td></tr>";
                  }
@@ -139,16 +142,17 @@
             <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
              <div class="foto">
                   <div id="wrapper" style="margin-top: 20px;">
-                     <input id="fileUpload" name="foto" multiple="multiple" type="file"/> 
-                     <div id="image-holder">Inserir Foto</div>
+                     <input id="fileUpload" name="foto" multiple="multiple" type="file" /> 
+                     <div id="image-holder"><img class="thumb-image" src="" alt="Inserir Foto" /></div>
+                     <input type="hidden" name="foto" value="<?= $dados->getfoto() ?>"/>
                   </div>
              </div>            
             <tr><td></td><td align="right">
                     <button>GRAVA</button>
             <!--<input type="submit" value="GRAVA">-->
                &nbsp<input type="reset" value="LIMPA"></td></tr>
-         </form>
          </table>
+             </form>
             <span class="info">* campos obrigatórios</span>
         </fieldset>
         <?php endif; ?>
