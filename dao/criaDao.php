@@ -295,6 +295,9 @@
           if($search->getorder()){
             $sql .= " ORDER BY `".$search->getorder()."`";
           }
+          if($search->getdesc()){
+             $sql .= " DESC";
+          }
         return $sql;
   }'."\r\n";
     $texto .= '    private function criaTabela($tabela){

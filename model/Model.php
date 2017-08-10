@@ -44,6 +44,7 @@
  private $order;
  private $naturalde;
  private $foto;
+ private $desc;
  public function getid(){
 	return $this->id;
  }
@@ -307,5 +308,11 @@
  }
  public function setfoto($foto ){
 	$this->foto=$foto;
+ }
+ public function getdesc(){
+	return $this->desc;
+ }
+ public function setdesc($desc ){
+	$this->desc=$desc;
  }
  }

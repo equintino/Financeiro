@@ -5,16 +5,21 @@
 </style>
 <?php
     $variaveis=array('dt','descricao','entrada','saida','diz_ofe');
+    $act =$_GET['act']; 
     $dao = new Dao();
     $model = new Model();
-    $mes=ModelValidador::nomeMes((substr($_GET['mes'],0,2)));
+    $search = new ModelSearchCriteria();
+    $search->settabela('saldo');
+    foreach($dao->encontre($search) as $tudo);
+    if($act=='cad'){
+      $mes = ModelValidador::nomeMes(ModelValidador::numeroMes($tudo->getmes())+1);
+      $ano = $tudo->getano();
+    }else{
+      $mes=ModelValidador::nomeMes((substr($_GET['mes'],0,2)));
       $ano='20'.substr($_GET['mes'],-2,2);
       $data_=explode("/", $_GET['mes']);
-               if(!@$data_[1]){
-                  echo 'Favor inserir o ano.';
-                  die;
-               }
-    $act =$_GET['act']; 
+    }
+              
     @$continua=$_GET['continua'];
     @$conclui=$_GET['conclui'];
     $link="../web/resumo.php?mes=".ModelValidador::numeroMes(ModelValidador::tirarAcento($mes))."&ano=$ano";
@@ -41,17 +46,21 @@
                         var membros=new Array('.$lista.');
                      </script>';
                
-               $search->settabela('saldo');
-               $search->setano($ano);
-               $search->setmes($mes);
-               $numeroMes=ModelValidador::numeroMes($mes);
-               $relatorio=$dao->encontre($search);
-               if($continua != 1){
-                  if($relatorio){
-                     echo 'Relatório do mês de '.$mes.' ja foi feito.';
-                     die;
-                  }
-               }
+               //$search->settabela('saldo');
+               //$search->setano($ano);
+               //$search->setmes($mes);
+               //$numeroMes=ModelValidador::numeroMes($mes);
+               //$relatorio=$dao->encontre($search);
+               //foreach($relatorio as $relMes);
+               //echo '<pre>';
+               //echo $mes;
+               //print_r($relMes->getmes());die;
+               //if($continua != 1){
+                  //if($relatorio){
+                     //echo 'Relatório do mês de '.$mes.' ja foi feito.';
+                     //die;
+                  //}
+               //}
          ?>
          <form class="font_1" id="cadastro" action="../paginas/add.php?act=rel" method="POST" >
          <table class="notprint">

@@ -37,7 +37,7 @@ $(document).ready(function() {
                 $(location).attr('href','index.php?pagina=relMensal&mes='+resposta+'&act=rel');
             }
           })       
-          $('#movimento').click(function(){
+         /* $('#movimento').click(function(){
             var resposta=prompt('Quaal o número do mês/ano?');
             if(resposta==''){
                alert('Insira o mês/ano.');
@@ -46,7 +46,7 @@ $(document).ready(function() {
             if(resposta){
                 $(location).attr('href','index.php?pagina=relMensal&mes='+resposta+'&act=cad');
             }
-          })         
+          }) */        
       $('#tipo').hide();
       $('#movimentacao').change(function(){
          var mov=$('#movimentacao').val();

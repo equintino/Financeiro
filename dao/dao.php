@@ -4,7 +4,7 @@
    public function __destruct(){
       $this->db = null;
    }
-   public function encontre(ModelSearchCriteria $search = null){
+   public function encontre(ModelSearchCriteria $search = null){ 
             set_time_limit(3600);
             ini_set('memory_limit', '-1');
         $result = array();
@@ -187,6 +187,9 @@
           }
           if($search->getorder()){
             $sql .= " ORDER BY `".$search->getorder()."`";
+          }
+          if($search->getdesc()){
+             $sql .= " DESC";
           }
         return $sql;
   }

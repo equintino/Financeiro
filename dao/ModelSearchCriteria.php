@@ -352,4 +352,12 @@
           $this->foto = $foto;
           return $this;
       }
+   private $desc;
+       public function getdesc(){
+        return $this->desc;
+      }
+      public function setdesc($desc){
+          $this->desc = $desc;
+          return $this;
+      }
 }

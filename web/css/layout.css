@@ -68,6 +68,7 @@ body{
 .rel{
     float: left;
     width: 470px;
+    margin-left: 20px;
 }
 .rel th, .resumo th{
     background-color: green;

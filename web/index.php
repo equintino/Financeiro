@@ -62,7 +62,6 @@ final class index{
     if(array_key_exists('pagina', $_GET)){
       $pagina = $_GET['pagina'];
     }
-    //print_r($this->checaPagina($pagina));die;
     return $this->checaPagina($pagina);
   }
   
@@ -98,7 +97,7 @@ final class index{
     }
   }  
   private function getScript($pagina){
-    return self::PAGINA_DIR . $pagina .'php';
+    return self::PAGINA_DIR . $pagina .'.php';
   }
   private function getTemplate($pagina){  
     return self::PAGINA_DIR . $pagina .'.phtml';

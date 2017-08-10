@@ -133,5 +133,8 @@
 	if (array_key_exists('foto', $properties)){
 	  $model->setfoto($properties['foto']);
 	}
+	if (array_key_exists('desc', $properties)){
+	  $model->setdesc($properties['desc']);
+	}
   } 
  }
