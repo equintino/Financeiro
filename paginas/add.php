@@ -33,6 +33,7 @@
            $item='diz';
         }elseif($item=='oferta'){
            $item='ofe';
+           $model->setdescricAo('OFERTA');
         }
      }elseif($key=='valor'||$key=='movimentacao'){
         $key=$_POST['movimentacao'];
@@ -45,8 +46,9 @@
      }elseif($key=='mes'){
         $item=ModelValidador::numeroMes($item);
      }
-     if($key!='MAX_FILE_SIZE'){
+     if($key!='MAX_FILE_SIZE' && $key!='mesAno'){
         $classe='set'.$key;
+        //print_r($key);echo '<br>';
         $model->$classe($item);
      }
   }

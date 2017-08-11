@@ -61,6 +61,7 @@ $(document).ready(function() {
          if(x=='oferta'){
             $('#descricao')
                .text('OFERTA');
+            $('#descricao').val('OFERTA');
          }else if(x=='dizimo'){
             y=membros;
             var b='<select name=descricao>'; 
@@ -75,6 +76,7 @@ $(document).ready(function() {
       }) 
       $('#conclui').click(function(){
         var mesAno=$('input[name="mesAno"]').val();
+        //alert(saldo);
         fecha = confirm('Deseja realmente fechar o relatório?');
         var url = 'index.php?pagina=relMensal&conclui=1&act=rel&mes='+mesAno+'';
         if(fecha){

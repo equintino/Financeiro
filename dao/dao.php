@@ -12,7 +12,7 @@
             $model = new Model();
             modelMapper::map($model, $row);
             $result[$model->getid()] = $model;
-        }
+        } 
         return $result;
    }
    public function encontrePorId(ModelSearchCriteria $search=null){
@@ -108,7 +108,7 @@
         $model->setexcluido(0);
         $model->setcriado($now);
         $model->setmodificado($now); 
-        $this->execute3($this->criaTabela($model->gettabela()), $model);   
+        //$this->execute3($this->criaTabela($model->gettabela()), $model);   
         $sql = 'INSERT INTO `'.$model->gettabela().'` (`id`,`ano`,`mes`,`saldo`,`excluido`) VALUES (:id,:ano,:mes,:saldo,:excluido)';
 	return $this->execute3($sql, $model);
    }

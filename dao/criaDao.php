@@ -176,7 +176,7 @@
         $model->setexcluido(0);
         $model->setcriado($now);
         $model->setmodificado($now); 
-        $this->execute3($this->criaTabela($model->gettabela()), $model);   
+        //$this->execute3($this->criaTabela($model->gettabela()), $model);   
         $sql = \'INSERT INTO `\'.$model->gettabela().\'` (';
           $x = 1;
           foreach($variaveis3 as $item){
