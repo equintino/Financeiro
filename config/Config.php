@@ -15,7 +15,11 @@ final class Config {
         if (self::$data !== null) {
             return self::$data;
         }
-        self::$data = parse_ini_file('../config/config.ini', true);
+        if(file_exists('config/config.ini')){
+            self::$data = parse_ini_file('config/config.ini', true);
+        }else{
+            self::$data = parse_ini_file('../config/config.ini', true);
+        }
         return self::$data;
     }
 }
