@@ -38,7 +38,7 @@
         return $model;
    }'."\r\n";
     $texto .= '   public function grava(Model $model){
-        if ($model->getid() === null) {
+        if ($model->getid() == null) {
             return $this->insert($model);
         }
         return $this->update($model);

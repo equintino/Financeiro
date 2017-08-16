@@ -20,7 +20,9 @@
         $ano=str_replace('/','',strrchr($item,'/'));
         $mes=substr($item,3,2);
         $dia=substr($item,0,2);
-        $item=$ano.'-'.$mes.'-'.$dia;
+        if($dia){
+         $item=$ano.'-'.$mes.'-'.$dia;
+        }
      }elseif($key=='movimentacao'){
         $key=$item;
      }elseif($key=='ano'){
@@ -54,8 +56,7 @@
   }
   $model->settabela($ano);
   if($act == 'cad'){
-     //print_r($_POST);die;
-      if(array_key_exists('foto', $_POST)){
+      if($_FILES['foto']['name'] == null){
            $foto=$_POST['foto'];
       }else{
      ////// enviando arquivo /////////

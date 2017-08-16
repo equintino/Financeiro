@@ -29,7 +29,9 @@
         return $model;
    }
    public function grava(Model $model){
-        if ($model->getid() === null) {
+      //print_r($model->getid());die;
+        if ($model->getid() == null) {
+           //die;
             return $this->insert($model);
         }
         return $this->update($model);
@@ -76,6 +78,7 @@
         $sql = 'INSERT INTO `ibad`.`lt_membros` (`id`,`nome`,`email`,`tel`,`endereco`,`dt_batismo`,`dt_nascimento`,`criado`,`modificado`,`excluido`,`dt_ingresso`,`dt_casamento`,`conjuge`,`igbatismo`,`estcivil`,`tit`,`escolaridade`,`rg`,`pai`,`bairro`,`cel`,`sexo`,`mae`,`cep`,`estado`,`prof`,`cidade`,`cpf`,`igorigem`,`tipo`,`numero`,`complemento`,`naturalde`,`foto`) VALUES (:id,:nome,:email,:tel,:endereco,:dt_batismo,:dt_nascimento,:criado,:modificado,:excluido,:dt_ingresso,:dt_casamento,:conjuge,:igbatismo,:estcivil,:tit,:escolaridade,:rg,:pai,:bairro,:cel,:sexo,:mae,:cep,:estado,:prof,:cidade,:cpf,:igorigem,:tipo,:numero,:complemento,:naturalde,:foto)';
 	$search = new ModelSearchCriteria();
         $search->settabela('lt_membros');
+        //print_r($search);die;
         return $this->execute($sql, $model);
    }
    private function update(Model $model){
@@ -119,6 +122,7 @@
    }
    public function execute($sql,$model){
         $statement = $this->getDb()->prepare($sql);
+        //print_r($statement);die;
         $this->executeStatement($statement, $this->getParams($model));
         $search=new ModelSearchCriteria();
         if (!$model->getid()) {
