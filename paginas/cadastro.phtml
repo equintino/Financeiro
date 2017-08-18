@@ -2,6 +2,9 @@
     #rodape{
         display: none;
     } 
+    .fotoFicha{
+        background: #ccc;
+    }
 </style>    
 <script>
    $(document).ready(function(){
@@ -57,7 +60,7 @@
                        if($item->getnome()){
                         echo '<tr><td class="nome">'.$titulos[0].' </td><td class=dados colspan=3>&nbsp'.$item->getnome().'</td><td class=nome2>'.$titulos[3].' </td><td class=dados>&nbsp'.ModelValidador::data($item->getdt_nascimento()).'</td>';
                     if(substr($item->getfoto(),0,7)=='imagens'){
-                        echo '<td width="250" height="50" rowspan="5" align="center">';
+                        echo '<td class=fotoFicha width="250" height="50" rowspan="5" align="center">';
                       echo '<span><img title="'.$item->getnome().'" src="'.$item->getfoto().'" /></span><br><a href="../web/index.php?pagina=cadastro&act=cad&pag=0&id='.$item->getid().'" >&nbsp&nbsp&nbsp&nbspEditar Dados</a>';
                     echo '</td>';
                     }
