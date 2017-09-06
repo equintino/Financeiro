@@ -1,3 +1,4 @@
+<meta charset="utf-8" />
 <style>
     body{       
        //background: no-repeat url('../web/imagens/timbrado.png');

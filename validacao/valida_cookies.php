@@ -15,6 +15,7 @@
         }
         include $diretorio;
     }
+    //print_r($diretorio);die;
 class valida_cookies{
     public $login;
     public $senha;
@@ -24,7 +25,7 @@ class valida_cookies{
     function __construct(){
     }
     public function fazerLogin(){
-        if(empty(trim($this->login))){
+        /*if(empty(trim($this->login))){
 	echo "<table width=100% height=80% border=0>";
 	echo "<tr height=100%>";
 	echo "<td width=100% colspan=3 valign=center align=center>";
@@ -36,7 +37,7 @@ class valida_cookies{
 	echo "</td></tr></table>";
 	echo "</html></body>";
 	exit;
-        }
+        }*/
     }
     public function setLogin($login){
             $this->login = $this->maiusculo($login);
