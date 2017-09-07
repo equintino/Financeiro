@@ -63,7 +63,8 @@ $(document).ready(function() {
                .text('OFERTA');
             $('#descricao').val('OFERTA');
          }else if(x=='dizimo'){
-            y=membros;
+            var y = membros;
+            y = (y.split(','));
             var b='<select name=descricao>'; 
             var c;
                for(i=0;i<(y.length);i++){

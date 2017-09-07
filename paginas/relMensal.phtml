@@ -37,12 +37,14 @@
                $search = new ModelSearchCriteria();
                $search->settabela('lt_membros');
                $membros=$dao->encontre($search);
-               $lista = null;
+               $lista = "'";
                foreach($membros as $membro){
-                  $lista .= '"'.$membro->getnome().'",';
+                  $lista .= $membro->getnome().',';
                }
+               $lista .="'";
                echo '<script>
-                        var membros=new Array('.$lista.');
+                        var membros='.$lista.'; 
+                        alert(membros);
                      </script>';
                
                //$search->settabela('saldo');
